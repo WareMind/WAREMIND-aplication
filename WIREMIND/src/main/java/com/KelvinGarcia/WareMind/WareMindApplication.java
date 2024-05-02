@@ -1,5 +1,4 @@
 package com.KelvinGarcia.WareMind;
-import com.KelvinGarcia.WareMind.IU.InicioSesion;
 
 import javax.swing.*;
 
@@ -11,8 +10,8 @@ public class WareMindApplication {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				InicioSesion inicioSesion = new InicioSesion();
-				inicioSesion.setVisible(true);
+				RegistrarProducto registrarProducto = new RegistrarProducto();
+				registrarProducto.se
 			}
 		});
 

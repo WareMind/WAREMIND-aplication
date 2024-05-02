@@ -1,17 +1,16 @@
 /*
- * Created by JFormDesigner on Thu May 02 09:07:36 GMT-05:00 2024
+ * Created by JFormDesigner on Thu May 02 09:12:21 GMT-05:00 2024
  */
 
 package com.KelvinGarcia.WareMind.IU;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 /**
  * @author Samuel
  */
-public class RegistrarProducto extends JFrame {
-    public RegistrarProducto() {
+public class RegistrarEmpleado extends JFrame {
+    public RegistrarEmpleado() {
         initComponents();
     }
 
@@ -21,20 +20,18 @@ public class RegistrarProducto extends JFrame {
         this2 = new JFrame();
         lblId = new JLabel();
         lblNombre = new JLabel();
-        lblPrecio = new JLabel();
-        lblCantidad = new JLabel();
-        lblTipo = new JLabel();
+        lblCargo = new JLabel();
+        lblTelefono = new JLabel();
         txtId = new JTextField();
-        spnPrecio = new JSpinner();
         txtNombre = new JTextField();
-        spnCantidad = new JSpinner();
-        txtTipo = new JTextField();
         btnGuardar = new JButton();
         btnLimpiar = new JButton();
+        txtTelefono = new JTextField();
+        cmbCargo = new JComboBox<>();
 
         //======== this2 ========
         {
-            this2.setTitle("REGISTRAR PRODUCTO");
+            this2.setTitle("REGISTRAR EMPLEADO");
             var this2ContentPane = this2.getContentPane();
 
             //---- lblId ----
@@ -43,20 +40,24 @@ public class RegistrarProducto extends JFrame {
             //---- lblNombre ----
             lblNombre.setText("Nombre");
 
-            //---- lblPrecio ----
-            lblPrecio.setText("Precio");
+            //---- lblCargo ----
+            lblCargo.setText("Cargo");
 
-            //---- lblCantidad ----
-            lblCantidad.setText("Cantidad");
-
-            //---- lblTipo ----
-            lblTipo.setText("Tipo");
+            //---- lblTelefono ----
+            lblTelefono.setText("Telefono");
 
             //---- btnGuardar ----
             btnGuardar.setText("Guardar");
 
             //---- btnLimpiar ----
             btnLimpiar.setText("Limpiar");
+
+            //---- cmbCargo ----
+            cmbCargo.setModel(new DefaultComboBoxModel<>(new String[] {
+                "Almacenero",
+                "Administrador",
+                "Vendedor"
+            }));
 
             GroupLayout this2ContentPaneLayout = new GroupLayout(this2ContentPane);
             this2ContentPane.setLayout(this2ContentPaneLayout);
@@ -66,28 +67,27 @@ public class RegistrarProducto extends JFrame {
                         .addGroup(this2ContentPaneLayout.createParallelGroup()
                             .addGroup(this2ContentPaneLayout.createSequentialGroup()
                                 .addGap(145, 145, 145)
-                                .addGroup(this2ContentPaneLayout.createParallelGroup()
+                                .addGroup(this2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addGroup(this2ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(lblTelefono)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTelefono, GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                                    .addGroup(GroupLayout.Alignment.LEADING, this2ContentPaneLayout.createSequentialGroup()
                                         .addGap(15, 15, 15)
                                         .addComponent(lblId, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
                                         .addGap(2, 2, 2)
-                                        .addComponent(txtId))
-                                    .addGroup(this2ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(txtId, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                                    .addGroup(GroupLayout.Alignment.LEADING, this2ContentPaneLayout.createSequentialGroup()
                                         .addGroup(this2ContentPaneLayout.createParallelGroup()
-                                            .addComponent(lblPrecio)
+                                            .addComponent(lblCargo)
                                             .addComponent(lblNombre))
-                                        .addGap(18, 18, 18)
                                         .addGroup(this2ContentPaneLayout.createParallelGroup()
-                                            .addComponent(spnPrecio)
-                                            .addComponent(txtNombre)))
-                                    .addGroup(this2ContentPaneLayout.createSequentialGroup()
-                                        .addGroup(this2ContentPaneLayout.createParallelGroup()
-                                            .addComponent(lblCantidad)
-                                            .addComponent(lblTipo))
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(this2ContentPaneLayout.createParallelGroup()
-                                            .addComponent(txtTipo, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(spnCantidad, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE))))
+                                            .addGroup(this2ContentPaneLayout.createSequentialGroup()
+                                                .addGap(21, 21, 21)
+                                                .addComponent(cmbCargo))
+                                            .addGroup(this2ContentPaneLayout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))))
                                 .addGap(38, 38, 38))
                             .addGroup(GroupLayout.Alignment.TRAILING, this2ContentPaneLayout.createSequentialGroup()
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -109,21 +109,17 @@ public class RegistrarProducto extends JFrame {
                             .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(this2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPrecio)
-                            .addComponent(spnPrecio, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCargo)
+                            .addComponent(cmbCargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(this2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCantidad)
-                            .addComponent(spnCantidad, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(this2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTipo)
-                            .addComponent(txtTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(lblTelefono)
+                            .addComponent(txtTelefono, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63)
                         .addGroup(this2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnLimpiar))
-                        .addContainerGap(30, Short.MAX_VALUE))
+                        .addContainerGap(45, Short.MAX_VALUE))
             );
             this2.pack();
             this2.setLocationRelativeTo(this2.getOwner());
@@ -136,15 +132,13 @@ public class RegistrarProducto extends JFrame {
     private JFrame this2;
     private JLabel lblId;
     private JLabel lblNombre;
-    private JLabel lblPrecio;
-    private JLabel lblCantidad;
-    private JLabel lblTipo;
+    private JLabel lblCargo;
+    private JLabel lblTelefono;
     private JTextField txtId;
-    private JSpinner spnPrecio;
     private JTextField txtNombre;
-    private JSpinner spnCantidad;
-    private JTextField txtTipo;
     private JButton btnGuardar;
     private JButton btnLimpiar;
+    private JTextField txtTelefono;
+    private JComboBox<String> cmbCargo;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
