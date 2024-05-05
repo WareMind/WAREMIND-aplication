@@ -1,4 +1,4 @@
-package com.KelvinGarcia.WareMind.Model;
+package com.KelvinGarcia.WareMind.ENTITY;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,18 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.ResultSet;
-import java.time.LocalDate;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Pedido {
+public class Proveedor {
 
     private String id;
-    private LocalDate fecha_pedido;
+    private String nombre;
+    private String telefono;
+    private String email;
 
-    public void productosDePedidos(ResultSet resultados){
+    public void productosIngresados(ResultSet resultados){
 
     }
 }

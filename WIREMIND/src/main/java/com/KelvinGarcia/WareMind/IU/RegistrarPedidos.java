@@ -1,5 +1,5 @@
 /*
- * Created by JFormDesigner on Sat May 04 20:06:31 PET 2024
+ * Created by JFormDesigner on Sat May 04 20:04:04 PET 2024
  */
 
 package com.KelvinGarcia.WareMind.IU;
@@ -10,8 +10,8 @@ import javax.swing.GroupLayout;
 /**
  * @author user
  */
-public class RegistrarProducto extends JInternalFrame {
-    public RegistrarProducto() {
+public class RegistrarPedidos extends JInternalFrame {
+    public RegistrarPedidos() {
         initComponents();
     }
 
@@ -21,18 +21,16 @@ public class RegistrarProducto extends JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        textFecha = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         spnCantidad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        spnPrecio = new javax.swing.JSpinner();
-        txtUbicacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        textTipo = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        labelTotal = new javax.swing.JLabel();
+        labelPrecio1 = new javax.swing.JLabel();
+        labelTotal1 = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Contraseña:");
@@ -41,7 +39,7 @@ public class RegistrarProducto extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Registrar Producto");
+        setTitle("Registrar Pedidos");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -50,27 +48,13 @@ public class RegistrarProducto extends JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Precio:");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Fecha de Expiracion:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Ubicacion:");
+        jLabel3.setText("Total:");
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setMinimumSize(new java.awt.Dimension(68, 40));
         txtNombre.setPreferredSize(new java.awt.Dimension(75, 40));
-
-        textFecha.setBackground(new java.awt.Color(255, 255, 255));
-        textFecha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        textFecha.setForeground(new java.awt.Color(0, 0, 0));
-        textFecha.setMinimumSize(new java.awt.Dimension(68, 40));
-        textFecha.setPreferredSize(new java.awt.Dimension(75, 40));
 
         btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -94,24 +78,22 @@ public class RegistrarProducto extends JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cantidad:");
 
-        spnPrecio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        spnPrecio.setPreferredSize(new java.awt.Dimension(68, 40));
-
-        txtUbicacion.setBackground(new java.awt.Color(255, 255, 255));
-        txtUbicacion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtUbicacion.setForeground(new java.awt.Color(0, 0, 0));
-        txtUbicacion.setMinimumSize(new java.awt.Dimension(68, 40));
-        txtUbicacion.setPreferredSize(new java.awt.Dimension(75, 40));
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Tipo:");
 
-        textTipo.setBackground(new java.awt.Color(255, 255, 255));
-        textTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        textTipo.setForeground(new java.awt.Color(0, 0, 0));
-        textTipo.setMinimumSize(new java.awt.Dimension(68, 40));
-        textTipo.setPreferredSize(new java.awt.Dimension(75, 40));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Precio:");
+
+        labelTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelTotal.setForeground(new java.awt.Color(255, 255, 255));
+
+        labelPrecio1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelPrecio1.setForeground(new java.awt.Color(255, 255, 255));
+
+        labelTotal1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelTotal1.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,47 +111,47 @@ public class RegistrarProducto extends JInternalFrame {
                                         .addComponent(jLabel6)
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel1)
-                                        .addComponent(jLabel5)
                                         .addComponent(jLabel7)
-                                        .addComponent(jLabel4))
-                                .addGap(63, 63, 63)
+                                        .addComponent(jLabel8))
+                                .addGap(151, 151, 151)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                        .addComponent(labelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(spnCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(spnPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(textFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(textTipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                        .addComponent(labelPrecio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelTotal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(101, 101, 101)
+                                                .addComponent(jLabel1)
+                                                .addGap(27, 27, 27))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(jLabel8))
+                                        .addComponent(labelPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(spnPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(textFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4))
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel7)
-                                        .addComponent(textTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel5)
-                                        .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36)
+                                        .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(labelTotal1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(labelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnLimpiar)
                                         .addComponent(btnGuardar))
@@ -189,16 +171,14 @@ public class RegistrarProducto extends JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel labelPrecio1;
+    private javax.swing.JLabel labelTotal;
+    private javax.swing.JLabel labelTotal1;
     private javax.swing.JSpinner spnCantidad;
-    private javax.swing.JSpinner spnPrecio;
-    private javax.swing.JTextField textFecha;
-    private javax.swing.JTextField textTipo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtUbicacion;
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

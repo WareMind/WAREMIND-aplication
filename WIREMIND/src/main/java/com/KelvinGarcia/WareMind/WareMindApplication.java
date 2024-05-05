@@ -1,4 +1,5 @@
 package com.KelvinGarcia.WareMind;
+import com.KelvinGarcia.WareMind.IU.IniciarSesion;
 
 import javax.swing.*;
 
@@ -10,16 +11,12 @@ public class WareMindApplication {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				RegistrarProducto registrarProducto = new RegistrarProducto();
-				registrarProducto.se
+				IniciarSesion iniciarSesion = new IniciarSesion();
+				iniciarSesion.setVisible(true);
 			}
 		});
-			SwingUtilities.invokeLater(() -> {
-				RegistrarProveedor ventana = new RegistrarProveedor();
-				ventana.setTitle("Registrar Proveedor");
-				ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				ventana.setVisible(true);
-			});
-	}
 
+
+
+	}
 }

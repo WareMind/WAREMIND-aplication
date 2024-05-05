@@ -1,4 +1,4 @@
-package com.KelvinGarcia.WareMind.Model;
+package com.KelvinGarcia.WareMind.ENTITY;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

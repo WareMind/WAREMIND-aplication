@@ -1,4 +1,4 @@
-package com.KelvinGarcia.WareMind.Model;
+package com.KelvinGarcia.WareMind.BD;
 
 import lombok.SneakyThrows;
 
