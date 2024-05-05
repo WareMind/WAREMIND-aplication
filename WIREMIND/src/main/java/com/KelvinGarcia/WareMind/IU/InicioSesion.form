@@ -81,7 +81,7 @@
           <font size="24"/>
           <hideActionText value="false"/>
           <horizontalAlignment value="0"/>
-          <text value="Iiniciar Sesion"/>
+          <text value="Iniciar Sesion"/>
         </properties>
       </component>
       <component id="30d91" class="javax.swing.JLabel" binding="jLabel1" custom-create="true">

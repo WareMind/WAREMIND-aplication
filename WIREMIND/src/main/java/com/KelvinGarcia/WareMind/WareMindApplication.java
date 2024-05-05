@@ -14,8 +14,12 @@ public class WareMindApplication {
 				registrarProducto.se
 			}
 		});
-
-
-
+			SwingUtilities.invokeLater(() -> {
+				RegistrarProveedor ventana = new RegistrarProveedor();
+				ventana.setTitle("Registrar Proveedor");
+				ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				ventana.setVisible(true);
+			});
 	}
+
 }
