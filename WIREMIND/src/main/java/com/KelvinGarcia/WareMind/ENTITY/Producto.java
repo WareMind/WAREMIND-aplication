@@ -23,7 +23,5 @@ public class Producto {
     private String tipo;
     private String ubicacion;
 
-    public void ubicacionProducto(ResultSet resultado){
 
-    }
 }

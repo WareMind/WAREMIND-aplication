@@ -19,7 +19,4 @@ public class Cliente {
     private String telefono;
     private String email;
 
-    public void pedidosRealizados(ResultSet resultados){
-
-    }
 }
