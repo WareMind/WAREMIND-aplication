@@ -21,11 +21,9 @@ public class Conexion {
         try{
             Class.forName("org.postgresql.Driver");
             con =DriverManager.getConnection(conexionURL,usuario,contrasenia);
-            System.out.println("SI CONECTO");
         }
         catch(SQLException ex){
             System.out.println(ex.toString());
-            System.out.println("NO CONECTO");
         }
         return con;
     }

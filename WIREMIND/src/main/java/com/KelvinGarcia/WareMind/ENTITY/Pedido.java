@@ -16,8 +16,5 @@ public class Pedido {
 
     private String id;
     private LocalDate fecha_pedido;
-
-    public void productosDePedidos(ResultSet resultados){
-
-    }
+    private String idCliente;
 }
