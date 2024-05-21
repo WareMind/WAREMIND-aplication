@@ -4,8 +4,14 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * @author user
@@ -129,7 +135,40 @@ public class MostrarProductosVencer extends JInternalFrame {
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.listar();
+    }
+
+    private void listar(){
+        ProductoDTO productoDTO = new ProductoDTO();
+        ArrayList<Producto> productos = null;
+
+        try {
+            productos = productoDTO.ListarProductosVencidos();
+        } catch (SQLException ex) {
+            System.out.println("Error al listar productos vencidos: " + ex.getMessage());
+            return; // Salir del método si ocurre una excepción
+        }
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("PRECIO");
+        modelo.addColumn("CANTIDAD");
+        modelo.addColumn("FECHA VENCIMIENTO");
+        modelo.addColumn("TIPO");
+        modelo.addColumn("UBICACION");
+
+        for(Producto producto1 : productos){
+            String[] fila = new String[8];
+            fila[0] = producto1.getId();
+            fila[1] = producto1.getNombre();
+            fila[2] = String.valueOf(producto1.getPrecio());
+            fila[3] = String.valueOf(producto1.getCantidad());
+            fila[4] = String.valueOf(producto1.getFecha_expiracion());
+            fila[5] = producto1.getTipo();
+            fila[6] = producto1.getUbicacion();
+            modelo.addRow(fila);
+        }
+        jTable1.setModel(modelo);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
