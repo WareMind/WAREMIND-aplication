@@ -4,8 +4,8 @@ import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import javax.swing.*;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class ProductoDTO {
 
@@ -79,7 +79,7 @@ public class ProductoDTO {
         }
         return productos;
     }
-
+  
     public boolean actualizarProducto(Producto producto) throws SQLException {
         boolean fueActualizado = false;
         Connection conexion = con.getConexion();
