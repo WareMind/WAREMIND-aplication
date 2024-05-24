@@ -3,9 +3,8 @@ package com.KelvinGarcia.WareMind.DTO;
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class ProductoDTO {
@@ -79,6 +78,29 @@ public class ProductoDTO {
             }
         }
         return productos;
+    }
+  
+    public boolean actualizarProducto(Producto producto) throws SQLException {
+        boolean fueActualizado = false;
+        Connection conexion = con.getConexion();
+        try{
+            String sql = "UPDATE producto SET precio = "+producto.getPrecio()
+                    +", cantidad = "+producto.getCantidad()
+                    +", ubicacion = '"+producto.getUbicacion()+"'"
+                    +" WHERE id_producto = '"+producto.getId()+"'";
+
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            stmt.executeUpdate();
+
+            int cantidad = stmt.executeUpdate();
+
+            fueActualizado = (cantidad>0);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+        }finally {
+            conexion.close();
+        }
+        return fueActualizado;
     }
 
 }
