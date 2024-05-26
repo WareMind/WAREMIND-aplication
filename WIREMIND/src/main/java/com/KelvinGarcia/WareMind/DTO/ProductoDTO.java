@@ -4,8 +4,8 @@ import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import javax.swing.*;
 import java.sql.*;
-import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ProductoDTO {
 
