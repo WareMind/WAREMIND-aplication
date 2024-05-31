@@ -58,13 +58,13 @@ public class MenuAdministrador extends JInternalFrame {
         setTitle("Menu Administrador");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
+
         btnRegistrarEmpleado.setBackground(new java.awt.Color(255, 255, 255));
         btnRegistrarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarEmpleado.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarEmpleado.setText("REGISTRAR EMPLEADO");
         btnRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarEmpleadoActionPerformed(evt);
             }
         });
 
@@ -256,22 +256,6 @@ public class MenuAdministrador extends JInternalFrame {
 
         pack();
     }// </editor-fold>
-
-    private void btnRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnRegistrarEmpleado){
-            if(registrarEmpleado!=null){
-                desktop.remove(registrarEmpleado);
-                registrarEmpleado=null;
-                desktop.revalidate();
-                desktop.repaint();
-            }
-            else{
-                registrarEmpleado= new RegistrarEmpleado();
-                desktop.add(registrarEmpleado);
-            }
-            registrarEmpleado.setVisible(true);
-        }
-    }
 
     private void btnRegistrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {
         if(evt.getSource()==btnRegistrarProveedor){
@@ -476,6 +460,7 @@ public class MenuAdministrador extends JInternalFrame {
     private javax.swing.JButton btnVerProdcutosProveedor;
     private javax.swing.JButton btnVerProductosPedido;
     private javax.swing.JLabel jLabel2;
+
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

@@ -23,5 +23,8 @@ public class Producto {
     private String tipo;
     private String ubicacion;
 
+    private String id_Almacen;
+    //private String idProveedor;
+
 
 }
