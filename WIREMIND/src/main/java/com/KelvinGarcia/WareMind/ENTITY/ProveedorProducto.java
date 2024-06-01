@@ -19,4 +19,5 @@ public class ProveedorProducto {
     private int cantidad;
     private LocalDate fechaEntrada;
     private String tipo;
+    private String idProveedor;
 }

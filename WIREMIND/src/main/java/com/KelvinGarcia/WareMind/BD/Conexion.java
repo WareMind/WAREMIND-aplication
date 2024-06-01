@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class Conexion {
 
     @SneakyThrows
@@ -18,13 +17,15 @@ public class Conexion {
         String basedatos="/WIREMIND";
         String puerto=":5432";
         String conexionURL = "jdbc:postgresql://"+ip+puerto+basedatos;
-        try{
+
+        try {
             Class.forName("org.postgresql.Driver");
-            con =DriverManager.getConnection(conexionURL,usuario,contrasenia);
-        }
-        catch(SQLException ex){
+            con = DriverManager.getConnection(conexionURL, usuario, contrasenia);
+
+        } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+
         return con;
     }
 }

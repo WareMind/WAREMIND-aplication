@@ -19,7 +19,4 @@ public class Proveedor {
     private String telefono;
     private String email;
 
-    public void productosIngresados(ResultSet resultados){
-
-    }
 }

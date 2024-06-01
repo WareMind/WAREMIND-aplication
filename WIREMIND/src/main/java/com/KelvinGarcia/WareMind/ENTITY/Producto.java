@@ -22,6 +22,6 @@ public class Producto {
     private LocalDate fecha_expiracion;
     private String tipo;
     private String ubicacion;
-
+    private String id_Almacen;
 
 }

@@ -49,7 +49,7 @@ public class MenuAdministrador extends JInternalFrame {
         btnCerrarSesion = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
+        jLabel2.setText("ContraseÃ±a:");
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
@@ -426,7 +426,7 @@ public class MenuAdministrador extends JInternalFrame {
                 desktop.repaint();
             }
             else{
-               historialPedidosDia= new HistorialPedidosDia();
+                historialPedidosDia= new HistorialPedidosDia();
                 desktop.add(historialPedidosDia);
             }
             historialPedidosDia.setVisible(true);
