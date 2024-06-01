@@ -1,11 +1,13 @@
 package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
+import com.KelvinGarcia.WareMind.ENTITY.Cliente;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ClienteDTO {
 
@@ -28,5 +30,28 @@ public class ClienteDTO {
             conexion.close();
         }
         return buscado;
+    }
+
+    public boolean agregarCliente(Cliente cliente) throws SQLException {
+        boolean fueRegistrado = false;
+        Connection conexion = con.getConexion();
+        try {
+            String sql = "INSERT INTO Cliente(id_Cliente, nombre, telefono, email) VALUES(?,?,?,?)";
+            PreparedStatement st = conexion.prepareStatement(sql);
+
+            st.setString(1, cliente.getId());
+            st.setString(2, cliente.getNombre());
+            st.setString(3, cliente.getTelefono());
+            st.setString(4, cliente.getEmail());
+
+            int cantidad = st.executeUpdate();
+
+            fueRegistrado = (cantidad > 0);
+        } catch (Exception e) {
+            System.out.println("Error al agregar al empleado " + e.getMessage());
+        }finally {
+            conexion.close();
+        }
+        return fueRegistrado;
     }
 }
