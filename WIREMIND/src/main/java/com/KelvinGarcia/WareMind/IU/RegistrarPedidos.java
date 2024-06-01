@@ -50,7 +50,7 @@ public class RegistrarPedidos extends JInternalFrame {
         btnAgregar = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
+        jLabel2.setText("ContraseÃ±a:");
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
