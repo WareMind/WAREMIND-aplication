@@ -30,11 +30,8 @@ public class RegistrarProducto extends JInternalFrame {
         initComponents();
     }
 
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
-        //SpinnerNumberModel model = new SpinnerNumberModel(1.0,0.0,null,1);
 
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -45,10 +42,8 @@ public class RegistrarProducto extends JInternalFrame {
         textFecha = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        //spnCantidad = new javax.swing.JSpinner(model);
         spnCantidad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        //spnPrecio = new javax.swing.JSpinner(model);
         spnPrecio = new javax.swing.JSpinner();
         txtUbicacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -58,7 +53,7 @@ public class RegistrarProducto extends JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
+        jLabel2.setText("ContraseÃ±a:");
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
@@ -236,28 +231,13 @@ public class RegistrarProducto extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private String id;
-    private Producto producto;
-    int identificador;
+    String id;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             String dni = textDNI.getText();
             ProveedorDTO proveedorDTO = new ProveedorDTO();
             if(proveedorDTO.buscarDNI(dni)){
-                Producto producto = new Producto();
-                ProductoDTO productoDTO = new ProductoDTO();
-                boolean idEncontrado;
-
-               do {
-                    id = obtenerId();
-                    idEncontrado = productoDTO.buscarId(id);
-                } while (!idEncontrado);
-
-                producto.setId(id);
-
                 JOptionPane.showMessageDialog(this, "Proveedor encontrado");
             }
             else{
@@ -269,24 +249,26 @@ public class RegistrarProducto extends JInternalFrame {
         }
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt){
 
         try {
-            String dni = textDNI.getText();
-            ProveedorDTO proveedorDTO = new ProveedorDTO();
             Producto producto = new Producto();
+            Producto productoEncontrado;
+            ProductoDTO productoDTO = new ProductoDTO();
 
-            producto.setId(id);
-
-            if(proveedorDTO.buscarDNI(dni)){
-                ProductoDTO productoDTO = new ProductoDTO();
-                boolean idEncontrado;
+            String nombre=txtNombre.getText();
+            productoEncontrado = productoDTO.buscarProducto(nombre);
+            boolean idEncontrado;
+            if(productoEncontrado.getNombre()==null){
                 do {
                     id = obtenerId();
                     idEncontrado = productoDTO.buscarId(id);
                 } while (!idEncontrado);
-
+                producto.setId(id);
+            }
+            else{
+                producto.setId(productoEncontrado.getId());
+            }
 
             producto.setNombre(txtNombre.getText());
             producto.setPrecio(Integer.parseInt(spnPrecio.getValue().toString()));
@@ -296,17 +278,11 @@ public class RegistrarProducto extends JInternalFrame {
             producto.setTipo(textTipo.getText());
             producto.setUbicacion(txtUbicacion.getText());
 
-                if(productoDTO.agregarProducto(producto)){
-                    JOptionPane.showMessageDialog(this, "Producto guardado");
-                }else{
-                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
-                }
+            if(productoDTO.agregarProducto(producto)){
+                JOptionPane.showMessageDialog(this, "Producto guardado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
             }
-            else{
-                JOptionPane.showMessageDialog(this, "El proveedor no esta registrado");
-                textDNI.setText("");
-            }
-
 
             ProovedorProductoDTO proovedorProductoDTO = new ProovedorProductoDTO();
             ProveedorProducto proveedorProducto = new ProveedorProducto();
@@ -323,7 +299,7 @@ public class RegistrarProducto extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Producto del proveedor registrado");////
                 this.limpiar();
             } else{
-                JOptionPane.showMessageDialog(this, "No se guardó el producto del proveedor");
+                JOptionPane.showMessageDialog(this, "No se guardÃ³ el producto del proveedor");
             }
 
 
@@ -335,19 +311,18 @@ public class RegistrarProducto extends JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt){
         this.limpiar();
     }
-        private void limpiar(){
-            textDNI.setText("");
-            txtNombre.setText("");
-            spnPrecio.setValue(0);
-            spnCantidad.setValue(0);
-            textFecha.setText("");
-            textTipo.setText("");
-            txtUbicacion.setText("");
+    private void limpiar(){
+        txtNombre.setText("");
+        spnPrecio.setValue(0);
+        spnCantidad.setValue(0);
+        textFecha.setText("");
+        textTipo.setText("");
+        txtUbicacion.setText("");
     }
 
 
     private String obtenerId(){
-        identificador = (int) Math.round(Math.random()*100000);
+        int identificador = (int) Math.round(Math.random()*100000);
         return String.valueOf(identificador);
     }
 
@@ -371,7 +346,6 @@ public class RegistrarProducto extends JInternalFrame {
     private javax.swing.JTextField textTipo;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtUbicacion;
-
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

@@ -13,65 +13,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-//import java.util.Date;
+
 
 public class ProductoDTO {
 
     Conexion con = new Conexion();
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public boolean agregarProducto(Producto producto) throws SQLException {
-        boolean agregado = false;
-        Connection conexion = con.getConexion();
-
-        try {
-            PreparedStatement stmt = conexion.prepareStatement("insert into producto values(?,?,?,?,TO_DATE(?, 'YYYY-MM-DD'),TO_DATE(?, 'YYYY-MM-DD'),?,?,?)");
-
-            stmt.setString(1, producto.getId());
-            stmt.setString(2, producto.getNombre());
-            stmt.setFloat(3, producto.getPrecio());
-            stmt.setInt(4, producto.getCantidad());
-            stmt.setString(5, LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            stmt.setString(6, String.valueOf(Date.valueOf(producto.getFecha_expiracion())));
-            stmt.setString(7, producto.getTipo());
-            stmt.setString(8, producto.getUbicacion());
-            stmt.setString(9,"1");
-
-            int cantidad = stmt.executeUpdate();
-
-            agregado = (cantidad > 0);
-        } catch (Exception e) {
-            System.out.println("Error al agregar producto " + e.getMessage());
-        } finally {
-            conexion.close();
-        }
-        return agregado;
-    }
-
-
-
-    public boolean buscarId(String id)throws Exception {
-        Boolean buscado = false;
-        Connection conexion = con.getConexion();
-
-        try{
-            String sql = "select id_producto from producto where id_producto = '"+id+"'";
-            PreparedStatement statement = conexion.prepareStatement(sql);
-            ResultSet resultado = statement.executeQuery();
-            if(!resultado.next()){
-                buscado = true;
-            }
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
-        }finally {
-            conexion.close();
-        }
-        return buscado;
-    }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Producto buscarProducto(String nombre) throws Exception {
 
@@ -91,9 +37,9 @@ public class ProductoDTO {
                 producto.setTipo(resultado.getString("tipo"));
                 producto.setUbicacion(resultado.getString("ubicacion"));
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
-        } finally {
+        }finally {
             conexion.close();
         }
         return producto;
@@ -122,7 +68,7 @@ public class ProductoDTO {
                 // Convertir java.sql.Date a java.time.LocalDate para fecha_expiracion
                 Date fechaExpiracionSql = rs.getDate("fecha_expiracion");
                 if (fechaExpiracionSql != null) {
-                    LocalDate fechaExpiracion = ((java.sql.Date) fechaExpiracionSql).toLocalDate();
+                    LocalDate fechaExpiracion =  fechaExpiracionSql.toLocalDate();
                     p.setFecha_expiracion(fechaExpiracion);
                 }
 
@@ -137,10 +83,58 @@ public class ProductoDTO {
                 try {
                     conexion.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                    System.out.println("Error al cerrar la conexiÃ³n: " + e.getMessage());
                 }
             }
         }
         return productos;
     }
+
+    public boolean agregarProducto(Producto producto) throws SQLException {
+        boolean agregado = false;
+        Connection conexion = con.getConexion();
+
+        try {
+            PreparedStatement stmt = conexion.prepareStatement("insert into producto values(?,?,?,?,?,?,?,?,?)");
+
+            stmt.setString(1, producto.getId());
+            stmt.setString(2, producto.getNombre());
+            stmt.setFloat(3, producto.getPrecio());
+            stmt.setInt(4, producto.getCantidad());
+            stmt.setDate(5, Date.valueOf(producto.getFecha_entrada()));
+            stmt.setDate(6, Date.valueOf(producto.getFecha_expiracion()));
+            stmt.setString(7, producto.getTipo());
+            stmt.setString(8, producto.getUbicacion());
+            stmt.setString(9,"1");
+
+            int cantidad = stmt.executeUpdate();
+
+            agregado = (cantidad > 0);
+        } catch (Exception e) {
+            System.out.println("Error al agregar producto " + e.getMessage());
+        } finally {
+            conexion.close();
+        }
+        return agregado;
+    }
+
+    public boolean buscarId(String id)throws Exception {
+        Boolean buscado = false;
+        Connection conexion = con.getConexion();
+
+        try{
+            String sql = "select id_producto from producto where id_producto = '"+id+"'";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+            if(!resultado.next()){
+                buscado = true;
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+        }finally {
+            conexion.close();
+        }
+        return buscado;
+    }
+
 }

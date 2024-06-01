@@ -50,7 +50,7 @@ public class RegistrarPedidos extends JInternalFrame {
         btnAgregar = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
+        jLabel2.setText("ContraseÃ±a:");
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
@@ -194,7 +194,6 @@ public class RegistrarPedidos extends JInternalFrame {
                                         .addComponent(textDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
@@ -227,7 +226,6 @@ public class RegistrarPedidos extends JInternalFrame {
     private String id;
     private Producto producto;
     int identificador;
-
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt){
 
@@ -345,7 +343,6 @@ public class RegistrarPedidos extends JInternalFrame {
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTextField textDNI;
     private javax.swing.JTextField txtNombre;
-
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
