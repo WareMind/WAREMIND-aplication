@@ -4,8 +4,18 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
+import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Pedido;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 
@@ -175,8 +185,46 @@ public class VerPedidosCliente extends JInternalFrame {
         // TODO add your handling code here:
     }
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt){
+        String dni= txtNombre.getText();
+        ClienteDTO c= new ClienteDTO();
+        try {
+            if(c.buscarDNI(dni)){
+                this.listar();
+                JOptionPane.showMessageDialog(this, "El cliente esta registrado");
+            }else{
+                JOptionPane.showMessageDialog(this, "El cliente no esta registrado");
+                txtNombre.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void listar() {
+        PedidoDTO pedidoDTO = new PedidoDTO();
+        ArrayList<Pedido> pedido =null;
+
+        try{
+            pedido= pedidoDTO.ListarPedidos();
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar los pedidos: " + e.getMessage());
+        }
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("FECHA");
+        modelo.addColumn("PRECIO TOTAL");
+
+        for(Pedido pedido1 : pedido){
+            String[] fila = new String[8];
+            fila[0] = pedido1.getId();
+            fila[1] = String.valueOf(pedido1.getFecha_pedido());
+            fila[2] = pedido1.getIdCliente();
+            modelo.addRow(fila);
+        }
+        jTable1.setModel(modelo);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
