@@ -10,18 +10,16 @@ import java.util.ArrayList;
 public class ProductoDTO {
     private Conexion con = new Conexion();
 
-    public ArrayList<Producto> ListarProductosVencidos() throws SQLException {
+    public ArrayList<Producto> ListarProductosAgotados() throws SQLException {
         ArrayList<Producto> productos = new ArrayList<>();
         Connection conexion = con.getConexion();
 
-        try {
-            String sql = "SELECT id_producto, nombre, precio, cantidad, fecha_expiracion, tipo, ubicacion " +
-                    "FROM producto " +
-                    "WHERE fecha_expiracion <= CURRENT_DATE " +
-                    "OR fecha_expiracion BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '7 DAY');";
+        String sql = "SELECT id_producto, nombre, precio, cantidad, fecha_expiracion, tipo, ubicacion " +
+                "FROM producto " +
+                "WHERE cantidad <= 10";
 
-            PreparedStatement stmt = conexion.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        try (PreparedStatement stmt = conexion.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Producto p = new Producto();
@@ -42,7 +40,9 @@ public class ProductoDTO {
                 productos.add(p);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar productos vencidos: " + e.getMessage());
+            System.out.println("Error al listar productos agotados: " + e.getMessage());
+            // Re-throw the exception to let the calling method handle it
+            throw e;
         } finally {
             if (conexion != null) {
                 try {

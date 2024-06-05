@@ -24,6 +24,7 @@ public class MenuAdministrador extends JInternalFrame {
     private VerProductosPedido verProductosPedido;
     private HistorialPedidosDia historialPedidosDia;
     private MostrarProductosVencer mostrarProductosVencer;
+    private MostrarProductosAgotado mostrarProductosAgotado;
     private ActualizarInfoAdministrador actualizarInfoAdministrador;
 
     public MenuAdministrador() {
@@ -41,6 +42,7 @@ public class MenuAdministrador extends JInternalFrame {
         btnRegistrarCliente = new javax.swing.JButton();
         btnActualizarProductos = new javax.swing.JButton();
         btnMostrarProductosVencidos = new javax.swing.JButton();
+        btnMostrarProductosAgotados = new javax.swing.JButton();
         btnVerPedidosCliente = new javax.swing.JButton();
         btnVerProdcutosProveedor = new javax.swing.JButton();
         btnVerProductosPedido = new javax.swing.JButton();
@@ -56,7 +58,7 @@ public class MenuAdministrador extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Menu Administrador");
-        setPreferredSize(new java.awt.Dimension(670, 550));
+        setPreferredSize(new java.awt.Dimension(700, 580));
 
         btnRegistrarEmpleado.setBackground(new java.awt.Color(255, 255, 255));
         btnRegistrarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -125,6 +127,16 @@ public class MenuAdministrador extends JInternalFrame {
         btnMostrarProductosVencidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMostrarProductosVencidosActionPerformed(evt);
+            }
+        });
+
+        btnMostrarProductosAgotados.setBackground(new java.awt.Color(255, 255, 255));
+        btnMostrarProductosAgotados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnMostrarProductosAgotados.setForeground(new java.awt.Color(0, 0, 0));
+        btnMostrarProductosAgotados.setText("MOSTRAR PRODUCTOS AGOTADOS O POR AGOTARSE");
+        btnMostrarProductosAgotados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarProductosAgotadosActionPerformed(evt);
             }
         });
 
@@ -214,7 +226,8 @@ public class MenuAdministrador extends JInternalFrame {
                                                 .addGap(1, 1, 1)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(btnActualizarInformacionEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnMostrarProductosVencidos))
+                                                        .addComponent(btnMostrarProductosVencidos)
+                                                        .addComponent(btnMostrarProductosAgotados))
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnCerrarSesion)
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -244,6 +257,8 @@ public class MenuAdministrador extends JInternalFrame {
                                         .addComponent(btnHistorialPedidosDia))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
+                                                .addGap(31,31,31)
+                                                .addComponent(btnMostrarProductosAgotados)
                                                 .addGap(31, 31, 31)
                                                 .addComponent(btnMostrarProductosVencidos)
                                                 .addGap(27, 27, 27)
@@ -369,6 +384,22 @@ public class MenuAdministrador extends JInternalFrame {
         }
     }
 
+    private void btnMostrarProductosAgotadosActionPerformed(java.awt.event.ActionEvent evt) {
+        if(evt.getSource()==btnMostrarProductosAgotados){
+            if(mostrarProductosAgotado!=null){
+                desktop.remove(mostrarProductosAgotado);
+                mostrarProductosAgotado=null;
+                desktop.revalidate();
+                desktop.repaint();
+            }
+            else{
+                mostrarProductosAgotado= new MostrarProductosAgotado();
+                desktop.add(mostrarProductosAgotado);
+            }
+            mostrarProductosAgotado.setVisible(true);
+        }
+    }
+
     private void btnVerPedidosClienteActionPerformed(java.awt.event.ActionEvent evt) {
         if(evt.getSource()==btnVerPedidosCliente){
             if(verPedidosCliente!=null){
@@ -426,7 +457,7 @@ public class MenuAdministrador extends JInternalFrame {
                 desktop.repaint();
             }
             else{
-               historialPedidosDia= new HistorialPedidosDia();
+                historialPedidosDia= new HistorialPedidosDia();
                 desktop.add(historialPedidosDia);
             }
             historialPedidosDia.setVisible(true);
@@ -467,6 +498,7 @@ public class MenuAdministrador extends JInternalFrame {
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnHistorialPedidosDia;
     private javax.swing.JButton btnMostrarProductosVencidos;
+    private javax.swing.JButton btnMostrarProductosAgotados;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnRegistrarEmpleado;
     private javax.swing.JButton btnRegistrarPedidos;
