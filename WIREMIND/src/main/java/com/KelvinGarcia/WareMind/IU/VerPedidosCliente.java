@@ -211,7 +211,7 @@ public class VerPedidosCliente extends JInternalFrame {
         String id= txtNombre.getText();
         try {
             if (pedidoDTO.buscarPedido(id)) {
-                pedido=pedidoDTO.ListarPedidos(id);
+                pedido=pedidoDTO.ListarPedidos();
             }
         } catch (Exception e) {
             System.out.println("Error al listar los pedidos: " + e.getMessage());
@@ -223,11 +223,13 @@ public class VerPedidosCliente extends JInternalFrame {
         modelo.addColumn("FECHA");
         modelo.addColumn("PRECIO TOTAL");
 
+        double total = pedidoDTO.calcularTotal(pedido);
+
         for(Pedido pedido1 : pedido){
             String[] fila = new String[8];
             fila[0] = pedido1.getId();
             fila[1] = String.valueOf(pedido1.getFecha_pedido());
-            fila[2] = pedido1.getIdCliente();
+            fila[2] = String.valueOf(pedido1.getIdCliente());
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);

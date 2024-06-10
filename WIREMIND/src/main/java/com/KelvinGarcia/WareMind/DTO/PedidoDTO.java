@@ -56,12 +56,15 @@ public class PedidoDTO {
         return buscado;
     }
 
-    public ArrayList<Pedido> ListarPedidos(String id) throws SQLException {
+    public ArrayList<Pedido> ListarPedidos(){
         ArrayList<Pedido> pedidos = new ArrayList<>();
-        ArrayList<Producto> productos= new ArrayList<>();
         Connection conexion = con.getConexion();
         try {
-            String sql = "SELECT id_pedido, fecha_pedido, id_cliente FROM Pedido where id_cliente= '"+id+"'";
+            String sql = "SELECT pe.id_pedido, pe.fecha_pedido, SUM(pp.precio * pp.cantidad) as total " +
+                         "FROM Pedido pe " +
+                         "INNER JOIN Pedido_Producto pp " +
+                         "ON pe.id_pedido = pp.id_pedido " +
+                         "GROUP BY pe.id_pedido, pe.fecha_pedido";
 
             PreparedStatement stmt = conexion.prepareStatement(sql);
 
@@ -70,6 +73,8 @@ public class PedidoDTO {
                 Pedido p = new Pedido();
                 p.setId(rs.getString("id_pedido"));
                 p.setFecha_pedido(rs.getDate("fecha_pedido").toLocalDate());
+                double total = rs.getDouble("total");
+                p.setIdCliente(String.valueOf(total));
                 pedidos.add(p);
             }
         } catch (SQLException e) {
@@ -103,5 +108,13 @@ public class PedidoDTO {
             conexion.close();
         }
         return buscado;
+    }
+
+    public double calcularTotal(ArrayList<Pedido> pedidos) {
+        double total = 0.0;
+        for (Pedido p : pedidos) {
+            total += Double.parseDouble(p.getIdCliente());
+        }
+        return total;
     }
 }
