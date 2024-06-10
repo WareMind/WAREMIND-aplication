@@ -56,24 +56,20 @@ public class PedidoDTO {
         return buscado;
     }
 
-    public ArrayList<Pedido> ListarPedidos() throws SQLException {
+    public ArrayList<Pedido> ListarPedidos(String id) throws SQLException {
         ArrayList<Pedido> pedidos = new ArrayList<>();
-        Producto producto=new Producto();
+        ArrayList<Producto> productos= new ArrayList<>();
         Connection conexion = con.getConexion();
         try {
-            String sql = "SELECT id_pedido, fecha_pedido, id_cliente FROM Pedido";
+            String sql = "SELECT id_pedido, fecha_pedido, id_cliente FROM Pedido where id_cliente= '"+id+"'";
 
             PreparedStatement stmt = conexion.prepareStatement(sql);
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Pedido p = new Pedido();
                 p.setId(rs.getString("id_pedido"));
-                Date fecha = rs.getDate("fecha_pedido");
-                if (fecha != null) {
-                    LocalDate fechaPedido = fecha.toLocalDate();
-                    p.setFecha_pedido(fechaPedido);
-                }
-                p.setIdCliente(rs.getString("n"));
+                p.setFecha_pedido(rs.getDate("fecha_pedido").toLocalDate());
                 pedidos.add(p);
             }
         } catch (SQLException e) {
@@ -88,5 +84,24 @@ public class PedidoDTO {
             }
         }
         return pedidos;
+    }
+
+    public boolean buscarPedido(String id)throws Exception {
+        Boolean buscado = false;
+        Connection conexion = con.getConexion();
+
+        try{
+            String sql = "select id_pedido from Pedido where id_cliente = '"+id+"'";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+            if(resultado.next()){
+                buscado = true;
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+        }finally {
+            conexion.close();
+        }
+        return buscado;
     }
 }
