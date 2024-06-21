@@ -190,9 +190,9 @@ public class VerProductosPedido extends JInternalFrame {
                 String[] fila = new String[8];
                 fila[0]=producto1.getId();
                 fila[1]=producto1.getNombre();
-                fila[2]=String.valueOf(producto1.getPrecio());
+                fila[2]=String.format("%.2f", producto1.getPrecio());
                 fila[3]=String.valueOf(producto1.getCantidad());
-                fila[4]=String.valueOf(producto1.getPrecio()*producto1.getCantidad());
+                fila[4]=String.format("%.2f", producto1.getPrecio() * producto1.getCantidad());
                 fila[5]=producto1.getTipo();
                 modelo.addRow(fila);
             }
