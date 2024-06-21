@@ -168,7 +168,7 @@ public class VerProductosPedido extends JInternalFrame {
     private void listar() {
         PedidoProductoDTO pedidos= new PedidoProductoDTO();
         ArrayList<Producto> productos=null;
-        String id= txtID.getText();
+        String id= txtID.getText().trim();
 
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
@@ -179,26 +179,29 @@ public class VerProductosPedido extends JInternalFrame {
         modelo.addColumn("TIPO");
 
         try{
-            if(pedidos.buscarProducto(id)){
-                productos=pedidos.reportarProductos();
+            if (pedidos.buscarProducto(id)) {
+                productos = pedidos.reportarProductos(id);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún pedido con el ID proporcionado.");
+                return;
             }
+
+            for(Producto producto1: productos){
+                String[] fila = new String[8];
+                fila[0]=producto1.getId();
+                fila[1]=producto1.getNombre();
+                fila[2]=String.valueOf(producto1.getPrecio());
+                fila[3]=String.valueOf(producto1.getCantidad());
+                fila[4]=String.valueOf(producto1.getPrecio()*producto1.getCantidad());
+                fila[5]=producto1.getTipo();
+                modelo.addRow(fila);
+            }
+            jTable1.setModel(modelo);
+
         }catch (Exception e) {
             System.out.println("Error al listar los productos: " + e.getMessage());
             txtID.setText("");
         }
-
-        for(Producto producto1: productos){
-            String[] fila = new String[8];
-            fila[0]=producto1.getId();
-            fila[1]=producto1.getNombre();
-            fila[2]=String.valueOf(producto1.getPrecio());
-            fila[3]=String.valueOf(producto1.getCantidad());
-            fila[4]=String.valueOf(producto1.getPrecio()*producto1.getCantidad());
-            fila[5]=producto1.getTipo();
-            modelo.addRow(fila);
-        }
-        jTable1.setModel(modelo);
-
     }
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {

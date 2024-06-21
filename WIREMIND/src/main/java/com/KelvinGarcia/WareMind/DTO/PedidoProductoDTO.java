@@ -42,13 +42,14 @@ public class PedidoProductoDTO {
         return fueAgregado;
     }
 
-    public ArrayList<Producto> reportarProductos()throws IOException{
+    public ArrayList<Producto> reportarProductos(String id)throws IOException{
         ArrayList<Producto> producto= new ArrayList<>();
         Connection conexion = con.getConexion();
         try{
             String sql = "SELECT Pedido_Producto.id_producto, Pedido_Producto.nombre, Pedido_Producto.precio, Pedido_Producto.cantidad, Producto.tipo " +
                          "FROM Pedido_Producto INNER JOIN Producto " +
-                         "ON Pedido_Producto.id_producto = Producto.id_producto";
+                         "ON Pedido_Producto.id_producto = Producto.id_producto " +
+                         "WHERE Pedido_Producto.id_pedido = '"+id+"'";
 
             PreparedStatement stmt = conexion.prepareStatement(sql);
 
