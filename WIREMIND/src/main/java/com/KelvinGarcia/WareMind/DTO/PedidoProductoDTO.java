@@ -59,7 +59,7 @@ public class PedidoProductoDTO {
                 pr.setId(rs.getString("id_producto"));
                 pr.setNombre(rs.getString("nombre"));
                 pr.setCantidad(Integer.parseInt(rs.getString("precio")));
-                pr.setPrecio(Float.parseFloat(rs.getString("cantidad")));
+                pr.setPrecio(rs.getFloat("cantidad"));
                 pr.setTipo(rs.getString("tipo"));
                 producto.add(pr);
             }
