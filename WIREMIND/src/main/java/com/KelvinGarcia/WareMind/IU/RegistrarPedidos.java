@@ -287,6 +287,7 @@ public class RegistrarPedidos extends JInternalFrame {
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt){
+
         try{
             PedidoProductoDTO pedidoProductoDTO = new PedidoProductoDTO();
             PedidoProducto pedidoProducto = new PedidoProducto();
@@ -301,7 +302,6 @@ public class RegistrarPedidos extends JInternalFrame {
             }else{
                 JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
             }
-
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
