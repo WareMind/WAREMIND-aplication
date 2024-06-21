@@ -4,8 +4,15 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
+import com.KelvinGarcia.WareMind.DTO.PedidoProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.PedidoProducto;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  * @author user
@@ -139,16 +146,66 @@ public class VerProductosPedido extends JInternalFrame {
     }// </editor-fold>
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        txtID.setText("");
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String id= txtID.getText();
+        PedidoProductoDTO c= new PedidoProductoDTO();
+        try {
+            if(c.buscarProducto(id)){
+                this.listar();
+                JOptionPane.showMessageDialog(this, "Pedido encontrado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Pedido no encontrado");
+                txtID.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void listar() {
+        PedidoProductoDTO pedidos= new PedidoProductoDTO();
+        ArrayList<Producto> productos=null;
+        String id= txtID.getText();
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("PRECIO");
+        modelo.addColumn("CANTIDAD");
+        modelo.addColumn("TOTAL");
+        modelo.addColumn("TIPO");
+
+        try{
+            if(pedidos.buscarProducto(id)){
+                productos=pedidos.reportarProductos();
+            }
+        }catch (Exception e) {
+            System.out.println("Error al listar los productos: " + e.getMessage());
+            txtID.setText("");
+        }
+
+        for(Producto producto1: productos){
+            String[] fila = new String[8];
+            fila[0]=producto1.getId();
+            fila[1]=producto1.getNombre();
+            fila[2]=String.valueOf(producto1.getPrecio());
+            fila[3]=String.valueOf(producto1.getCantidad());
+            fila[4]=String.valueOf(producto1.getPrecio()*producto1.getCantidad());
+            fila[5]=producto1.getTipo();
+            modelo.addRow(fila);
+        }
+        jTable1.setModel(modelo);
+
     }
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+
+
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnBuscar;
