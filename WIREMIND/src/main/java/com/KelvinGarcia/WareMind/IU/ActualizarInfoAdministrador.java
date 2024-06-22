@@ -4,6 +4,9 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.EmpleadoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Empleado;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -14,6 +17,8 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
     public ActualizarInfoAdministrador() {
         initComponents();
     }
+
+    private Empleado empleado;
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
@@ -99,6 +104,9 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
         btnActualizar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(0, 0, 0));
         btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) { btnActualizarActionPerfomed(evt); }
+        });
 
         txtDNI.setBackground(new java.awt.Color(255, 255, 255));
         txtDNI.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -192,11 +200,57 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
     }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.limpiar();
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        try{
+            EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+            String id = txtDNI.getText();
+            empleado = empleadoDTO.buscarEmpleadoID(id);
+
+            if (id.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese el DNI del empleado");
+                return;
+            }
+
+            if (empleado != null && empleado.getId() != null && !empleado.getId().isEmpty()) {
+                txtNombre.setText(empleado.getNombre());
+                txtContraseña.setText(empleado.getContraseña());
+                boxPuesto.setSelectedItem(empleado.getPuesto());
+                txtTelefono.setText(empleado.getTelefono());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el DNI");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void btnActualizarActionPerfomed(java.awt.event.ActionEvent evt){
+        try{
+            EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+            empleado.setNombre(txtNombre.getText());
+            empleado.setContraseña(txtContraseña.getText());
+            empleado.setPuesto(boxPuesto.getSelectedItem().toString());
+            empleado.setTelefono(txtTelefono.getText());
+
+            if(empleadoDTO.actualizarDatos(txtDNI.getText(), empleado)) {
+                JOptionPane.showMessageDialog(this, "Datos actualizados exitosamente");
+            } else{
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar el ID");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void limpiar(){
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtContraseña.setText("");
+        boxPuesto.setSelectedIndex(0);
+        txtTelefono.setText("");
     }
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JComboBox<String> boxPuesto;

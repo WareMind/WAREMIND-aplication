@@ -19,9 +19,11 @@ public class MenuVendedor extends JInternalFrame {
     private RegistrarPedidos registrarPedidos;
     private VerProductosPedido verProductosPedido;
     private ActualizarInfoEmpleado actualizarInfoEmpleado;
+    private String idEmpleado;
 
-    public MenuVendedor() {
+    public MenuVendedor(String idEmpleado) {
         initComponents();
+        this.idEmpleado = idEmpleado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -184,7 +186,7 @@ public class MenuVendedor extends JInternalFrame {
                 desktop.repaint();
             }
             else{
-                actualizarInfoEmpleado= new ActualizarInfoEmpleado();
+                actualizarInfoEmpleado= new ActualizarInfoEmpleado(idEmpleado);
                 desktop.add(actualizarInfoEmpleado);
             }
             actualizarInfoEmpleado.setVisible(true);

@@ -19,7 +19,6 @@ public class IniciarSesion extends JFrame {
     private MenuAdministrador menuAdministrador;
     private MenuAlmacenero menuAlmacenero;
     private MenuVendedor menuVendedor;
-    private EmpleadoDTO empleadoDTO;
 
     public IniciarSesion() {
         initComponents();
@@ -156,6 +155,7 @@ public class IniciarSesion extends JFrame {
 
             if (empleadoDTO.iniciarSesion(empleado)) {
                 String puesto = empleadoDTO.buscarPuesto(empleado);
+                String idEmpleado = empleadoDTO.buscarIdEmpleado(empleado);
                 if(puesto.equalsIgnoreCase("ADMINISTRADOR")){
                     menuAdministrador=null;
                     desktop.remove(jPanel1);
@@ -181,7 +181,7 @@ public class IniciarSesion extends JFrame {
                         desktop.repaint();
                     }
                     else{
-                        menuAlmacenero= new MenuAlmacenero();
+                        menuAlmacenero= new MenuAlmacenero(idEmpleado);
                         desktop.add(menuAlmacenero);
                     }
                     menuAlmacenero.setVisible(true);
@@ -196,7 +196,7 @@ public class IniciarSesion extends JFrame {
                         desktop.repaint();
                     }
                     else{
-                        menuVendedor= new MenuVendedor();
+                        menuVendedor= new MenuVendedor(idEmpleado);
                         desktop.add(menuVendedor);
                     }
                     menuVendedor.setVisible(true);

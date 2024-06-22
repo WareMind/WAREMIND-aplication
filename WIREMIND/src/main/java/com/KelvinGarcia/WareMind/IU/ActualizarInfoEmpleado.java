@@ -4,6 +4,9 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.EmpleadoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Empleado;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -11,8 +14,12 @@ import javax.swing.GroupLayout;
  * @author user
  */
 public class ActualizarInfoEmpleado extends JInternalFrame {
-    public ActualizarInfoEmpleado() {
+    private Empleado empleado;
+    private String idEmpleado;
+    public ActualizarInfoEmpleado(String idEmpleado) {
         initComponents();
+        this.empleado = new Empleado();
+        this.empleado.setId(idEmpleado);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -72,6 +79,9 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
         btnActualizar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(0, 0, 0));
         btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) { btnActualizarActionPerformed(evt);}
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,6 +130,39 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
 
     private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
+        try{
+            EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+            empleado.setNombre(txtNombre.getText());
+            empleado.setContraseña(txtContraseña.getText());
+            empleado.setTelefono(txtTelefono.getText());
+
+            if (empleado.getNombre().isEmpty() && empleado.getContraseña().isEmpty() && empleado.getTelefono().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Ingrese datos en los campos que desee actualizar");
+                return;
+            }
+
+            idEmpleado = this.empleado.getId();
+
+            if(empleadoDTO.actualizarDatos(idEmpleado, empleado)){
+                JOptionPane.showMessageDialog(rootPane, "Datos actualizados correctamente");
+                this.limpiar();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Error al actualizar el empleado");
+                this.limpiar();
+            }
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void limpiar(){
+        txtNombre.setText("");
+        txtContraseña.setText("");
+        txtTelefono.setText("");
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
