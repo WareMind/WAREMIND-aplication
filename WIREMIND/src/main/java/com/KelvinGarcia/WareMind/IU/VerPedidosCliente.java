@@ -188,14 +188,15 @@ public class VerPedidosCliente extends JInternalFrame {
 
     private void listar() {
         PedidoDTO pedidoDTO = new PedidoDTO();
-        ArrayList<Pedido> pedido = null;
+        ArrayList<Pedido> pedidos = null;
         String id= txtNombre.getText();
         try {
-            if (pedidoDTO.buscarPedido(id)) {
-                pedido=pedidoDTO.ListarPedidos();
+            pedidos = pedidoDTO.ListarPedidos(id);
+            if (pedidos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay pedidos");
             }
         } catch (Exception e) {
-            System.out.println("Error al listar los pedidos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar los pedidos: " + e.getMessage());
             txtNombre.setText("");
         }
 
@@ -204,13 +205,11 @@ public class VerPedidosCliente extends JInternalFrame {
         modelo.addColumn("FECHA");
         modelo.addColumn("PRECIO TOTAL");
 
-        double total = pedidoDTO.calcularTotal(pedido);
-
-        for(Pedido pedido1 : pedido){
+        for(Pedido pedido : pedidos){
             String[] fila = new String[8];
-            fila[0] = pedido1.getId();
-            fila[1] = String.valueOf(pedido1.getFecha_pedido());
-            fila[2] = String.valueOf(pedido1.getIdCliente());
+            fila[0] = pedido.getId();
+            fila[1] = String.valueOf(pedido.getFecha_pedido());
+            fila[2] = String.valueOf(pedido.getIdCliente());
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);
