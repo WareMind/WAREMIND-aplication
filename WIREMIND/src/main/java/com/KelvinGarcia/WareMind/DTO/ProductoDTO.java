@@ -159,4 +159,73 @@ public class ProductoDTO {
         return buscado;
     }
 
+    public ArrayList<Producto> ListarProductosAgotados() throws SQLException {
+        ArrayList<Producto> productos = new ArrayList<>();
+        Connection conexion = con.getConexion();
+
+        try {
+            String sql = "SELECT id_producto, nombre, precio, cantidad, fecha_expiracion, tipo, ubicacion " +
+                    "FROM producto " +
+                    "WHERE cantidad <= 10";
+
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Producto p = new Producto();
+                p.setId(rs.getString("id_producto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecio(rs.getFloat("precio"));
+                p.setCantidad(rs.getInt("cantidad"));
+
+                // Convertir java.sql.Date a java.time.LocalDate para fecha_expiracion
+                Date fechaExpiracionSql = rs.getDate("fecha_expiracion");
+                if (fechaExpiracionSql != null) {
+                    LocalDate fechaExpiracion =  fechaExpiracionSql.toLocalDate();
+                    p.setFecha_expiracion(fechaExpiracion);
+                }
+
+                p.setTipo(rs.getString("tipo"));
+                p.setUbicacion(rs.getString("ubicacion"));
+                productos.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar productos agotados: " + e.getMessage());
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
+        }
+        return productos;
+    }
+
+    public boolean eliminarProducto(String id) throws SQLException {
+        boolean fueEliminado = false;
+        Connection conn = con.getConexion();
+
+        try {
+            String sql = "DELETE FROM producto WHERE id_producto = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id); // Usa setString porque id es de tipo String
+
+            fueEliminado = (stmt.executeUpdate() > 0);
+        } catch (Exception e) {
+            System.out.println("Error al eliminar producto " + e.getMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error eliminando "+e.getMessage());
+                }
+            }
+        }
+        return fueEliminado;
+    }
+
+
 }
