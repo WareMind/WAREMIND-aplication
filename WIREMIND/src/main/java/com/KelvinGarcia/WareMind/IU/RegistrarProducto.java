@@ -4,8 +4,23 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.*;
+import com.KelvinGarcia.WareMind.ENTITY.*;
+
+import com.KelvinGarcia.WareMind.DTO.ProveedorDTO;
+import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
+import com.KelvinGarcia.WareMind.DTO.ProovedorProductoDTO;
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Proveedor;
+import com.KelvinGarcia.WareMind.ENTITY.Pedido;
+import com.KelvinGarcia.WareMind.ENTITY.ProveedorProducto;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * @author user
@@ -18,7 +33,13 @@ public class RegistrarProducto extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        SpinnerNumberModel model = new SpinnerNumberModel(
+                1.0,
+                0.0,
+                null,
+                1
+        );
+
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -29,7 +50,7 @@ public class RegistrarProducto extends JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         spnCantidad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        spnPrecio = new javax.swing.JSpinner();
+        spnPrecio = new javax.swing.JSpinner(model);
         txtUbicacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         textTipo = new javax.swing.JTextField();
@@ -37,14 +58,11 @@ public class RegistrarProducto extends JInternalFrame {
         textDNI = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Registrar Producto");
+        setTitle("Registrar producto");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -89,6 +107,11 @@ public class RegistrarProducto extends JInternalFrame {
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         spnCantidad.setPreferredSize(new java.awt.Dimension(68, 40));
 
@@ -128,6 +151,11 @@ public class RegistrarProducto extends JInternalFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("BUSCAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -206,16 +234,107 @@ public class RegistrarProducto extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    String id;
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        try{
+            String dni = textDNI.getText();
+            ProveedorDTO proveedorDTO = new ProveedorDTO();
+            if(proveedorDTO.buscarDNI(dni)){
+                JOptionPane.showMessageDialog(this, "Proveedor encontrado");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "El proveedor no esta registrado");
+                textDNI.setText("");
+            }
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt){
+
+        try {
+            Producto producto = new Producto();
+            Producto productoEncontrado;
+            ProductoDTO productoDTO = new ProductoDTO();
+
+            String nombre=txtNombre.getText();
+            productoEncontrado = productoDTO.buscarProducto(nombre);
+            boolean idEncontrado;
+            if(productoEncontrado.getNombre()==null){
+                do {
+                    id = obtenerId();
+                    idEncontrado = productoDTO.buscarId(id);
+                } while (!idEncontrado);
+                producto.setId(id);
+            }
+            else{
+                producto.setId(productoEncontrado.getId());
+            }
+
+            producto.setNombre(txtNombre.getText());
+            producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
+            producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+            producto.setFecha_entrada(LocalDate.now());
+            producto.setFecha_expiracion(LocalDate.parse(textFecha.getText()));
+            producto.setTipo(textTipo.getText());
+            producto.setUbicacion(txtUbicacion.getText());
+
+            if(productoDTO.agregarProducto(producto)){
+                JOptionPane.showMessageDialog(this, "Producto guardado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+            }
+
+            ProovedorProductoDTO proovedorProductoDTO = new ProovedorProductoDTO();
+            ProveedorProducto proveedorProducto = new ProveedorProducto();
+            proveedorProducto.setId(producto.getId());
+            proveedorProducto.setNombre(txtNombre.getText());
+            proveedorProducto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
+            proveedorProducto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+            proveedorProducto.setFechaEntrada(LocalDate.now());
+            proveedorProducto.setTipo(textTipo.getText());
+            proveedorProducto.setIdProveedor(textDNI.getText());
+
+
+            if (proovedorProductoDTO.agregarProductoDelProveedor(proveedorProducto)){
+                JOptionPane.showMessageDialog(this, "Producto del proveedor registrado");////
+                this.limpiar();
+            } else{
+                JOptionPane.showMessageDialog(this, "No se guardÃ³ el producto del proveedor");
+            }
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt){
+        this.limpiar();
+    }
+    private void limpiar(){
+        txtNombre.setText("");
+        spnPrecio.setValue(0);
+        spnCantidad.setValue(0);
+        textFecha.setText("");
+        textTipo.setText("");
+        txtUbicacion.setText("");
+    }
+
+
+    private String obtenerId(){
+        int identificador = (int) Math.round(Math.random()*100000);
+        return String.valueOf(identificador);
+    }
+
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

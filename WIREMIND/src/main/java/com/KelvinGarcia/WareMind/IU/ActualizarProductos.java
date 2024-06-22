@@ -4,6 +4,9 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
 import javax.swing.*;
 
 /**
@@ -17,7 +20,13 @@ public class ActualizarProductos extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        SpinnerNumberModel model = new SpinnerNumberModel(
+                1.0,
+                0.0,
+                null,
+                1
+        );
+
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -26,18 +35,15 @@ public class ActualizarProductos extends JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         spnCantidad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        spnPrecio = new javax.swing.JSpinner();
+        spnPrecio = new javax.swing.JSpinner(model);
         txtUbicacion = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Actualizar Productos");
+        setTitle("Actualizar productos");
         setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
@@ -72,6 +78,11 @@ public class ActualizarProductos extends JInternalFrame {
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         spnCantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         spnCantidad.setPreferredSize(new java.awt.Dimension(68, 40));
@@ -161,12 +172,55 @@ public class ActualizarProductos extends JInternalFrame {
         pack();
     }// </editor-fold>
 
+    private Producto producto;
+
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.limpiar();
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
+        try{
+            ProductoDTO productoDTO = new ProductoDTO();
+            String nombre = txtNombre.getText();
+            producto = productoDTO.buscarProducto(nombre);
+            if(!producto.getNombre().isEmpty()){
+                spnPrecio.setValue(producto.getPrecio());
+                spnCantidad.setValue(producto.getCantidad());
+                txtUbicacion.setText(producto.getUbicacion());
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "El producto no existe");
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try{
+            ProductoDTO productoDTO = new ProductoDTO();
+            producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
+            producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+            producto.setUbicacion(txtUbicacion.getText());
+
+            if(productoDTO.actualizarProducto(producto)){
+                JOptionPane.showMessageDialog(this, "Producto actualizado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+            }
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void limpiar(){
+
+        txtNombre.setText("");
+        spnPrecio.setValue(0);
+        spnCantidad.setValue(0);
+        txtUbicacion.setText("");
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
@@ -174,7 +228,6 @@ public class ActualizarProductos extends JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

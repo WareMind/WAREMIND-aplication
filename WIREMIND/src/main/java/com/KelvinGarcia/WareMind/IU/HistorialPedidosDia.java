@@ -4,8 +4,13 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Pedido;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  * @author user
@@ -18,7 +23,6 @@ public class HistorialPedidosDia extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -26,14 +30,11 @@ public class HistorialPedidosDia extends JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Historial de Pedidos al Dia");
+        setTitle("Historial de pedidos al dia");
         setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
@@ -61,15 +62,12 @@ public class HistorialPedidosDia extends JInternalFrame {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setBackground(java.awt.Color.darkGray);
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jTable1.setRowHeight(25);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "ID", "CLIENTE", "FECHA", "PRECIO TOTAL"
@@ -128,14 +126,44 @@ public class HistorialPedidosDia extends JInternalFrame {
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        PedidoDTO pedidoDTO = new PedidoDTO();
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try{
+            pedidos = pedidoDTO.ListarPedidosDeHoy();
+
+            if(pedidos.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No se realzaron pedidos el dia de hoy");
+            }
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("CLIENTE");
+        modelo.addColumn("FECHA");
+        modelo.addColumn("PRECIO TOTAL");
+
+        for(Pedido pedido : pedidos){
+            String[] fila = new String[4];
+            fila[0] = pedido.getId();
+            try{
+            fila[1] = pedidoDTO.buscarClienteDelPedido(pedido.getId());
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+            fila[2] = String.valueOf(pedido.getFecha_pedido());
+            fila[3] = String.valueOf(pedido.getIdCliente());
+            modelo.addRow(fila);
+        }
+        jTable1.setModel(modelo);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

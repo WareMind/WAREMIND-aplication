@@ -25,6 +25,7 @@ public class MenuAdministrador extends JInternalFrame {
     private HistorialPedidosDia historialPedidosDia;
     private MostrarProductosVencer mostrarProductosVencer;
     private ActualizarInfoAdministrador actualizarInfoAdministrador;
+    private MostrarProductosAgotadosPorAgotarse mostrarProductosAgotadosPorAgotar;
 
     public MenuAdministrador() {
         initComponents();
@@ -33,7 +34,6 @@ public class MenuAdministrador extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         btnRegistrarEmpleado = new javax.swing.JButton();
         btnRegistrarProveedor = new javax.swing.JButton();
         btnRegistrarPedidos = new javax.swing.JButton();
@@ -47,15 +47,13 @@ public class MenuAdministrador extends JInternalFrame {
         btnHistorialPedidosDia = new javax.swing.JButton();
         btnActualizarInformacionEmpleado = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
+        btnMostrarProductosAgotados = new javax.swing.JButton();
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Menu Administrador");
+        setTitle("Menu administrador");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         btnRegistrarEmpleado.setBackground(new java.awt.Color(255, 255, 255));
@@ -188,11 +186,21 @@ public class MenuAdministrador extends JInternalFrame {
             }
         });
 
+        btnMostrarProductosAgotados.setBackground(new java.awt.Color(255, 255, 255));
+        btnMostrarProductosAgotados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnMostrarProductosAgotados.setForeground(new java.awt.Color(0, 0, 0));
+        btnMostrarProductosAgotados.setText("MOSTRAR PRODUCTOS AGOTADOS O POR AGOTARSE");
+        btnMostrarProductosAgotados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarProductosAgotadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
@@ -202,27 +210,28 @@ public class MenuAdministrador extends JInternalFrame {
                                                         .addComponent(btnRegistrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(btnRegistrarProductos)
                                                         .addComponent(btnRegistrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(btnVerPedidosCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnActualizarProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnVerProdcutosProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnVerProductosPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(btnHistorialPedidosDia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(32, 32, 32))
+                                                        .addComponent(btnHistorialPedidosDia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(1, 1, 1)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnActualizarInformacionEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnMostrarProductosVencidos))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnCerrarSesion)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                        .addComponent(btnMostrarProductosVencidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btnMostrarProductosAgotados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(btnActualizarInformacionEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(btnCerrarSesion)))))
+                                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
+                                .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnRegistrarEmpleado)
                                         .addComponent(btnActualizarProductos))
@@ -242,16 +251,15 @@ public class MenuAdministrador extends JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnRegistrarPedidos)
                                         .addComponent(btnHistorialPedidosDia))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(31, 31, 31)
-                                                .addComponent(btnMostrarProductosVencidos)
-                                                .addGap(27, 27, 27)
-                                                .addComponent(btnActualizarInformacionEmpleado))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(62, 62, 62)
-                                                .addComponent(btnCerrarSesion)))
-                                .addContainerGap(41, Short.MAX_VALUE))
+                                .addGap(31, 31, 31)
+                                .addComponent(btnMostrarProductosVencidos)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnMostrarProductosAgotados)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnActualizarInformacionEmpleado)
+                                        .addComponent(btnCerrarSesion))
+                                .addGap(26, 26, 26))
         );
 
         pack();
@@ -426,7 +434,7 @@ public class MenuAdministrador extends JInternalFrame {
                 desktop.repaint();
             }
             else{
-               historialPedidosDia= new HistorialPedidosDia();
+                historialPedidosDia= new HistorialPedidosDia();
                 desktop.add(historialPedidosDia);
             }
             historialPedidosDia.setVisible(true);
@@ -460,12 +468,29 @@ public class MenuAdministrador extends JInternalFrame {
         }
     }
 
+    private void btnMostrarProductosAgotadosActionPerformed(java.awt.event.ActionEvent evt) {
+        if(evt.getSource()==btnMostrarProductosAgotados){
+            if(mostrarProductosAgotadosPorAgotar!=null){
+                desktop.remove(mostrarProductosAgotadosPorAgotar);
+                mostrarProductosAgotadosPorAgotar=null;
+                desktop.revalidate();
+                desktop.repaint();
+            }
+            else{
+                mostrarProductosAgotadosPorAgotar= new MostrarProductosAgotadosPorAgotarse();
+                desktop.add(mostrarProductosAgotadosPorAgotar);
+            }
+            mostrarProductosAgotadosPorAgotar.setVisible(true);
+        }
+    }
+
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnActualizarInformacionEmpleado;
     private javax.swing.JButton btnActualizarProductos;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnHistorialPedidosDia;
+    private javax.swing.JButton btnMostrarProductosAgotados;
     private javax.swing.JButton btnMostrarProductosVencidos;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnRegistrarEmpleado;
@@ -475,7 +500,6 @@ public class MenuAdministrador extends JInternalFrame {
     private javax.swing.JButton btnVerPedidosCliente;
     private javax.swing.JButton btnVerProdcutosProveedor;
     private javax.swing.JButton btnVerProductosPedido;
-    private javax.swing.JLabel jLabel2;
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

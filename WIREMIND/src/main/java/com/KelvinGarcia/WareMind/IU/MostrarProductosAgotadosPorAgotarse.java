@@ -1,23 +1,17 @@
-/*
- * Created by JFormDesigner on Sat May 04 19:49:34 PET 2024
- */
-
 package com.KelvinGarcia.WareMind.IU;
 
 import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * @author user
- */
-public class MostrarProductosVencer extends JInternalFrame {
-    public MostrarProductosVencer() {
+public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFrame {
+    ArrayList<Producto> productos = null;
+
+    public MostrarProductosAgotadosPorAgotarse() {
         initComponents();
     }
 
@@ -35,18 +29,18 @@ public class MostrarProductosVencer extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Mostrar los productos vencidos o por vencer");
+        setTitle("Mostrar los productos agotados o por agotarse");
         setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Productos por vencer:");
+        jLabel1.setText("Productos agotados o por agotarse:");
 
         btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
-        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.setText("ELIMINAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
@@ -92,19 +86,18 @@ public class MostrarProductosVencer extends JInternalFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(14, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addComponent(btnLimpiar)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGap(20, 20, 20)
-                                                                .addComponent(jLabel1)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(84, 84, 84)
                                                                 .addComponent(btnBuscar)))
                                                 .addGap(53, 53, 53))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(35, 35, 35))))
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(17, 17, 17))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,14 +110,34 @@ public class MostrarProductosVencer extends JInternalFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
                                 .addComponent(btnLimpiar)
-                                .addContainerGap(21, Short.MAX_VALUE))
+                                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int indice = jTable1.getSelectedRow();
+
+        if (indice == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar");
+            return;
+        }
+
+        Producto producto = this.productos.get(indice);
+
+        ProductoDTO productoDTO = new ProductoDTO();
+
+        try{
+            if(productoDTO.eliminarProducto(producto.getId())){
+                JOptionPane.showMessageDialog(this, "Eliminado correctamente");
+            } else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar");
+            }
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        this.listar();
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,12 +146,10 @@ public class MostrarProductosVencer extends JInternalFrame {
 
     private void listar(){
         ProductoDTO productoDTO = new ProductoDTO();
-        ArrayList<Producto> productos = null;
-
         try {
-            productos = productoDTO.ListarProductosVencidos();
+            productos = productoDTO.ListarProductosAgotados();
         } catch (SQLException ex) {
-            System.out.println("Error al listar productos vencidos: " + ex.getMessage());
+            System.out.println("Error al listar productos agotados: " + ex.getMessage());
             return; // Salir del método si ocurre una excepción
         }
         DefaultTableModel modelo = new DefaultTableModel();
@@ -164,13 +175,12 @@ public class MostrarProductosVencer extends JInternalFrame {
         jTable1.setModel(modelo);
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
+    // Variables declaration - do not modify
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    // Generated using JFormDesigner Evaluation license - Kelvin
-    // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+    // End of variables declaration
 }

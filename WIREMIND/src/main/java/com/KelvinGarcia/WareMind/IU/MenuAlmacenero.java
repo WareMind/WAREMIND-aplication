@@ -27,22 +27,17 @@ public class MenuAlmacenero extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         btnRegistrarProductos = new javax.swing.JButton();
         btnActualizarProductos = new javax.swing.JButton();
         btnVerProdcutosProveedor = new javax.swing.JButton();
         btnActualizarInformacionEmpleado = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Menu Almacenero");
+        setTitle("Menu almacenero");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         btnRegistrarProductos.setBackground(new java.awt.Color(255, 255, 255));

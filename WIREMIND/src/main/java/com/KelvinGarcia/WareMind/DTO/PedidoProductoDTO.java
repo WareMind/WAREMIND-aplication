@@ -2,11 +2,15 @@ package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.PedidoProducto;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PedidoProductoDTO {
 
@@ -30,11 +34,42 @@ public class PedidoProductoDTO {
             fueAgregado = (cantidad > 0);
 
         }catch (Exception e){
-            System.out.println("Error al agregar el producto"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al agregar el producto"+e.getMessage());
         }finally {
             conexion.close();
         }
         return fueAgregado;
+    }
+
+    public ArrayList<PedidoProducto> reportarProductos(String id)throws IOException{
+        ArrayList<PedidoProducto> productos= new ArrayList<>();
+        Connection conexion = con.getConexion();
+        try{
+            String sql = "SELECT * FROM pedido_producto WHERE id_pedido = '"+id+"'";
+
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                PedidoProducto producto= new PedidoProducto();
+                producto.setId(rs.getString("id_producto"));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setPrecio(Float.parseFloat(rs.getString("precio")));
+                producto.setCantidad(Integer.parseInt(rs.getString("cantidad")));
+                productos.add(producto);
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error al listar los pedidos" + e.getMessage());
+        }finally {
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
+        }
+        return productos;
     }
 
 }
