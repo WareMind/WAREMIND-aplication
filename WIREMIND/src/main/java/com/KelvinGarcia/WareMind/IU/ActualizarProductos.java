@@ -27,7 +27,6 @@ public class ActualizarProductos extends JInternalFrame {
                 1
         );
 
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -40,14 +39,11 @@ public class ActualizarProductos extends JInternalFrame {
         txtUbicacion = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Actualizar Productos");
+        setTitle("Actualizar productos");
         setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
@@ -232,7 +228,6 @@ public class ActualizarProductos extends JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

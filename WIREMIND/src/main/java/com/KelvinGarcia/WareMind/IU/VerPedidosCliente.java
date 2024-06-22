@@ -6,20 +6,13 @@ package com.KelvinGarcia.WareMind.IU;
 
 import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
 import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
-import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Pedido;
-import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 
@@ -36,67 +29,59 @@ public class VerPedidosCliente extends JInternalFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+        jLabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        btnLimpiar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnVerProductosPedido = new javax.swing.JButton();
 
-        jLabel2 = new JLabel();
-        jLabel1 = new JLabel();
-        txtNombre = new JTextField();
-        btnLimpiar = new JButton();
-        btnBuscar = new JButton();
-        jScrollPane2 = new JScrollPane();
-        jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
-        btnVerProductosPedido = new JButton();
-
-        jLabel2.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
-        setBackground(Color.darkGray);
+        setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Ver Pedidos del Cliente");
-        setPreferredSize(new Dimension(670, 550));
+        setTitle("Ver pedidos del cliente");
+        setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
-        jLabel1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setForeground(new Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("DNI del Cliente:");
 
-        txtNombre.setBackground(new Color(255, 255, 255));
-        txtNombre.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        txtNombre.setForeground(new Color(0, 0, 0));
-        txtNombre.setMinimumSize(new Dimension(68, 40));
-        txtNombre.setPreferredSize(new Dimension(75, 40));
+        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
+        txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombre.setMinimumSize(new java.awt.Dimension(68, 40));
+        txtNombre.setPreferredSize(new java.awt.Dimension(75, 40));
 
-        btnLimpiar.setBackground(new Color(255, 255, 255));
-        btnLimpiar.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        btnLimpiar.setForeground(new Color(0, 0, 0));
+        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
         btnLimpiar.setText("LIMPIAR");
-        btnLimpiar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
 
-        btnBuscar.setBackground(new Color(255, 255, 255));
-        btnBuscar.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        btnBuscar.setForeground(new Color(0, 0, 0));
+        btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("BUSCAR");
-        btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
 
-        jTable1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        jTable1.setBackground(Color.darkGray);
-        jTable1.setForeground(new Color(255, 255, 255));
-        jTable1.setModel(new DefaultTableModel(
+        jTable1.setBackground(java.awt.Color.darkGray);
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jTable1.setRowHeight(25);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null}
                 },
                 new String [] {
                         "ID", "FECHA", "PRECIO TOTAL"
@@ -114,57 +99,53 @@ public class VerPedidosCliente extends JInternalFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
-        btnVerProductosPedido.setBackground(new Color(255, 255, 255));
-        btnVerProductosPedido.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        btnVerProductosPedido.setForeground(new Color(0, 0, 0));
+        btnVerProductosPedido.setBackground(new java.awt.Color(255, 255, 255));
+        btnVerProductosPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVerProductosPedido.setForeground(new java.awt.Color(0, 0, 0));
         btnVerProductosPedido.setText("VER PRODUCTOS DEL PEDIDO");
-        btnVerProductosPedido.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        btnVerProductosPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerProductosPedidoActionPerformed(evt);
             }
         });
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel1)
+                                .addGap(28, 28, 28)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnBuscar)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(33, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(52, 52, 52)
-                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(430, 430, 430)
-                                                                .addComponent(btnLimpiar)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(btnBuscar))))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnVerProductosPedido, GroupLayout.PREFERRED_SIZE, 314, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel1))))
-                                .addContainerGap(34, Short.MAX_VALUE))
+                                                .addComponent(btnVerProductosPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(38, 38, 38)
+                                                .addComponent(btnLimpiar))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnBuscar))
-                                .addGap(50, 50, 50)
-                                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 288, GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnBuscar)
+                                        .addComponent(jLabel1))
+                                .addGap(32, 32, 32)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnLimpiar)
                                         .addComponent(btnVerProductosPedido))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,7 +221,6 @@ public class VerPedidosCliente extends JInternalFrame {
     private JButton btnLimpiar;
     private JButton btnVerProductosPedido;
     private JLabel jLabel1;
-    private JLabel jLabel2;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
     private JTable jTable1;

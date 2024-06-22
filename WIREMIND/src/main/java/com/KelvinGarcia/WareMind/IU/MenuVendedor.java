@@ -27,22 +27,17 @@ public class MenuVendedor extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         btnRegistrarPedidos = new javax.swing.JButton();
         btnRegistrarCliente = new javax.swing.JButton();
         btnVerProductosPedido = new javax.swing.JButton();
         btnActualizarInformacionEmpleado = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Menu Vendedor");
+        setTitle("Menu vendedor");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         btnRegistrarPedidos.setBackground(new java.awt.Color(255, 255, 255));
@@ -212,7 +207,6 @@ public class MenuVendedor extends JInternalFrame {
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnRegistrarPedidos;
     private javax.swing.JButton btnVerProductosPedido;
-    private javax.swing.JLabel jLabel2;
     // Generated using JFormDesigner Evaluation license - Kelvin
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

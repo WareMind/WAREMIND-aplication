@@ -82,7 +82,7 @@ public class ProductoDTO {
                 try {
                     conexion.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexiÃ³n: " + e.getMessage());
+                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
                 }
             }
         }

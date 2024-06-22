@@ -18,7 +18,6 @@ public class HistorialPedidosDia extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -26,14 +25,11 @@ public class HistorialPedidosDia extends JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Contraseña:");
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Historial de Pedidos al Dia");
+        setTitle("Historial de pedidos al dia");
         setPreferredSize(new java.awt.Dimension(670, 550));
         setVisible(true);
 
@@ -61,15 +57,12 @@ public class HistorialPedidosDia extends JInternalFrame {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setBackground(java.awt.Color.darkGray);
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jTable1.setRowHeight(25);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "ID", "CLIENTE", "FECHA", "PRECIO TOTAL"
@@ -135,7 +128,6 @@ public class HistorialPedidosDia extends JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

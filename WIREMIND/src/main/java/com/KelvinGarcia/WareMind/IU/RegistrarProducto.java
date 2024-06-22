@@ -33,7 +33,13 @@ public class RegistrarProducto extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        SpinnerNumberModel model = new SpinnerNumberModel(
+                1.0,
+                0.0,
+                null,
+                1
+        );
+
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -44,7 +50,7 @@ public class RegistrarProducto extends JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         spnCantidad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        spnPrecio = new javax.swing.JSpinner();
+        spnPrecio = new javax.swing.JSpinner(model);
         txtUbicacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         textTipo = new javax.swing.JTextField();
@@ -52,14 +58,11 @@ public class RegistrarProducto extends JInternalFrame {
         textDNI = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("ContraseÃ±a:");
-
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Registrar Producto");
+        setTitle("Registrar producto");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -271,7 +274,7 @@ public class RegistrarProducto extends JInternalFrame {
             }
 
             producto.setNombre(txtNombre.getText());
-            producto.setPrecio(Integer.parseInt(spnPrecio.getValue().toString()));
+            producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
             producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
             producto.setFecha_entrada(LocalDate.now());
             producto.setFecha_expiracion(LocalDate.parse(textFecha.getText()));
@@ -288,7 +291,7 @@ public class RegistrarProducto extends JInternalFrame {
             ProveedorProducto proveedorProducto = new ProveedorProducto();
             proveedorProducto.setId(producto.getId());
             proveedorProducto.setNombre(txtNombre.getText());
-            proveedorProducto.setPrecio(Integer.parseInt(spnPrecio.getValue().toString()));
+            proveedorProducto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
             proveedorProducto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
             proveedorProducto.setFechaEntrada(LocalDate.now());
             proveedorProducto.setTipo(textTipo.getText());
@@ -332,7 +335,6 @@ public class RegistrarProducto extends JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
