@@ -1,6 +1,15 @@
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFrame {
+    ArrayList<Producto> productos = null;
 
     public MostrarProductosAgotadosPorAgotarse() {
         initComponents();
@@ -31,7 +40,7 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
         btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
-        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.setText("ELIMINAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
@@ -108,11 +117,62 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
     }// </editor-fold>
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int indice = jTable1.getSelectedRow();
+
+        if (indice == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar");
+            return;
+        }
+
+        Producto producto = this.productos.get(indice);
+
+        ProductoDTO productoDTO = new ProductoDTO();
+
+        try{
+            if(productoDTO.eliminarProducto(producto.getId())){
+                JOptionPane.showMessageDialog(this, "Eliminado correctamente");
+            } else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar");
+            }
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        this.listar();
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.listar();
+    }
+
+    private void listar(){
+        ProductoDTO productoDTO = new ProductoDTO();
+        try {
+            productos = productoDTO.ListarProductosAgotados();
+        } catch (SQLException ex) {
+            System.out.println("Error al listar productos agotados: " + ex.getMessage());
+            return; // Salir del método si ocurre una excepción
+        }
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("PRECIO");
+        modelo.addColumn("CANTIDAD");
+        modelo.addColumn("FECHA VENCIMIENTO");
+        modelo.addColumn("TIPO");
+        modelo.addColumn("UBICACION");
+
+        for(Producto producto1 : productos){
+            String[] fila = new String[8];
+            fila[0] = producto1.getId();
+            fila[1] = producto1.getNombre();
+            fila[2] = String.valueOf(producto1.getPrecio());
+            fila[3] = String.valueOf(producto1.getCantidad());
+            fila[4] = String.valueOf(producto1.getFecha_expiracion());
+            fila[5] = producto1.getTipo();
+            fila[6] = producto1.getUbicacion();
+            modelo.addRow(fila);
+        }
+        jTable1.setModel(modelo);
     }
 
     // Variables declaration - do not modify
