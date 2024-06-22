@@ -2,10 +2,8 @@ package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.Pedido;
-import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ public class PedidoDTO {
         return buscado;
     }
 
-    public ArrayList<Pedido> ListarPedidos(){
+    public ArrayList<Pedido> ListarPedidos(String id){
         ArrayList<Pedido> pedidos = new ArrayList<>();
         Connection conexion = con.getConexion();
         try {
@@ -64,6 +62,7 @@ public class PedidoDTO {
                          "FROM Pedido pe " +
                          "INNER JOIN Pedido_Producto pp " +
                          "ON pe.id_pedido = pp.id_pedido " +
+                         "WHERE pe.id_cliente = '"+id+"'"+
                          "GROUP BY pe.id_pedido, pe.fecha_pedido";
 
             PreparedStatement stmt = conexion.prepareStatement(sql);
@@ -73,8 +72,7 @@ public class PedidoDTO {
                 Pedido p = new Pedido();
                 p.setId(rs.getString("id_pedido"));
                 p.setFecha_pedido(rs.getDate("fecha_pedido").toLocalDate());
-                double total = rs.getDouble("total");
-                p.setIdCliente(String.valueOf(total));
+                p.setIdCliente(String.valueOf(rs.getFloat("total")));
                 pedidos.add(p);
             }
         } catch (SQLException e) {
@@ -84,37 +82,62 @@ public class PedidoDTO {
                 try {
                     conexion.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexiÃ³n: " + e.getMessage());
+                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
                 }
             }
         }
         return pedidos;
     }
 
-    public boolean buscarPedido(String id)throws Exception {
-        Boolean buscado = false;
+    public ArrayList<Pedido> ListarPedidosDeHoy() throws Exception {
         Connection conexion = con.getConexion();
-
+        ArrayList<Pedido> pedidos = new ArrayList<>();
         try{
-            String sql = "select id_pedido from Pedido where id_cliente = '"+id+"'";
+            LocalDate fecha = LocalDate.now();
+            String sql = "SELECT pe.id_pedido, pe.fecha_pedido, SUM(pp.precio * pp.cantidad) as total " +
+                    "FROM Pedido pe " +
+                    "INNER JOIN Pedido_Producto pp ON pe.id_pedido = pp.id_pedido " +
+                    "WHERE pe.fecha_pedido = ? "+
+                    "GROUP BY pe.id_pedido, pe.fecha_pedido";
+
             PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(fecha));
             ResultSet resultado = statement.executeQuery();
-            if(resultado.next()){
-                buscado = true;
+            while (resultado.next()) {
+                Pedido p = new Pedido();
+                p.setId(resultado.getString("id_pedido"));
+                p.setFecha_pedido((resultado.getDate("fecha_pedido")).toLocalDate());
+                p.setIdCliente(String.valueOf(resultado.getFloat("total")));
+                pedidos.add(p);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }finally {
             conexion.close();
         }
-        return buscado;
+        return pedidos;
     }
 
-    public double calcularTotal(ArrayList<Pedido> pedidos) {
-        double total = 0.0;
-        for (Pedido p : pedidos) {
-            total += Double.parseDouble(p.getIdCliente());
+    public String buscarClienteDelPedido(String id) throws Exception {
+        Connection conexion = con.getConexion();
+        String nombre = null;
+        try{
+            String sql = "SELECT c.nombre FROM Pedido pe "+
+                    "INNER JOIN Cliente c ON pe.id_cliente = c.id_cliente "+
+                    "WHERE pe.id_pedido = '" + id + "'"+
+                    "GROUP BY c.nombre";
+
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+
+            while (resultado.next()) {
+                nombre = resultado.getString("nombre");
+            }
+        }catch (Exception e){
+
+        }finally {
+            conexion.close();
         }
-        return total;
+        return nombre;
     }
 }
