@@ -19,9 +19,11 @@ public class MenuAlmacenero extends JInternalFrame {
     private ActualizarProductos actualizarProductos;
     private VerProductosProveedor verProductosProveedor;
     private ActualizarInfoEmpleado actualizarInfoEmpleado;
+    private String idEmpleado;
 
-    public MenuAlmacenero() {
+    public MenuAlmacenero(String idEmpleado) {
         initComponents();
+        this.idEmpleado = idEmpleado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -184,7 +186,7 @@ public class MenuAlmacenero extends JInternalFrame {
                 desktop.repaint();
             }
             else{
-                actualizarInfoEmpleado= new ActualizarInfoEmpleado();
+                actualizarInfoEmpleado= new ActualizarInfoEmpleado(idEmpleado);
                 desktop.add(actualizarInfoEmpleado);
             }
             actualizarInfoEmpleado.setVisible(true);

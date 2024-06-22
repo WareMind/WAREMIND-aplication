@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmpleadoDTO {
 
@@ -80,4 +82,114 @@ public class EmpleadoDTO {
         }
         return fueAgregado;
     }
+
+    public boolean actualizarDatos(String idEmpleado, Empleado empleado) throws SQLException {
+        boolean fueActualizado = false;
+        Connection conexion = con.getConexion();
+
+        try {
+            StringBuilder sqlBuilder = new StringBuilder("UPDATE empleado SET ");
+            List<String> camposActualizados = new ArrayList<>();
+
+            if (empleado.getNombre() != null && !empleado.getNombre().isEmpty()) {
+                camposActualizados.add("nombre = ?");
+            }
+            if (empleado.getContraseña() != null && !empleado.getContraseña().isEmpty()) {
+                camposActualizados.add("contraseña = ?");
+            }
+            if (empleado.getTelefono() != null && !empleado.getTelefono().isEmpty()) {
+                camposActualizados.add("telefono = ?");
+            }
+            if (empleado.getPuesto() != null && !empleado.getPuesto().isEmpty()) {
+                camposActualizados.add("puesto = ?");
+            }
+
+            if (camposActualizados.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se han ingresado campos para actualizar.");
+                return false;
+            }
+
+            sqlBuilder.append(String.join(", ", camposActualizados));
+            sqlBuilder.append(" WHERE id_empleado = ?");
+            String sql = sqlBuilder.toString();
+
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+
+            int index = 1;
+            if (empleado.getNombre() != null && !empleado.getNombre().isEmpty()) {
+                stmt.setString(index++, empleado.getNombre());
+            }
+            if (empleado.getContraseña() != null && !empleado.getContraseña().isEmpty()) {
+                stmt.setString(index++, empleado.getContraseña());
+            }
+            if (empleado.getTelefono() != null && !empleado.getTelefono().isEmpty()) {
+                stmt.setString(index++, empleado.getTelefono());
+            }
+            if (empleado.getPuesto() != null && !empleado.getPuesto().isEmpty()) {
+                stmt.setString(index++, empleado.getPuesto());
+            }
+
+            stmt.setString(index, idEmpleado);
+
+            int cantidad = stmt.executeUpdate();
+
+            fueActualizado = (cantidad > 0);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar al empleado: " + e.getMessage());
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
+        }
+        return fueActualizado;
+    }
+
+    public String buscarIdEmpleado(Empleado empleado) throws SQLException {
+        String idEmpleado = null;
+        Connection conexion = con.getConexion();
+        try {
+            String sql = "SELECT id_empleado FROM empleado WHERE nombre = ? AND contraseña = ?";
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            stmt.setString(1, empleado.getNombre());
+            stmt.setString(2, empleado.getContraseña());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                idEmpleado = rs.getString("id_empleado");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener el ID del empleado: " + e.getMessage());
+        } finally {
+            conexion.close();
+        }
+        return idEmpleado;
+    }
+
+    public Empleado buscarEmpleadoID(String idEmpleado) throws SQLException {
+        Empleado empleado = new Empleado();
+        Connection conexion = con.getConexion();
+
+        try{
+            String sql = "select * from empleado where id_empleado = '"+idEmpleado+"'";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+            if(resultado.next()){
+                empleado.setId(resultado.getString("id_empleado"));
+                empleado.setNombre(resultado.getString("nombre"));
+                empleado.setContraseña(resultado.getString("contraseña"));
+                empleado.setPuesto(resultado.getString("puesto"));
+                empleado.setTelefono(resultado.getString("telefono"));
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+        }finally {
+            conexion.close();
+        }
+        return empleado;
+    }
+
 }
