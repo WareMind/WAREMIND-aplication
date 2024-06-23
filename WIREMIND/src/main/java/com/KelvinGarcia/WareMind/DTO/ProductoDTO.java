@@ -168,9 +168,9 @@ public class ProductoDTO {
         Connection conexion = con.getConexion();
 
         String sql = "SELECT MIN(id_producto) as id_producto, nombre, tipo, precio, SUM(cantidad) as cantidad_total, " +
-                "MIN(fecha_expiracion) as fecha_expiracion, ubicacion " +
+                "MIN(fecha_expiracion) as fecha_expiracion, fecha_entrada, ubicacion " +
                 "FROM producto " +
-                "GROUP BY nombre, tipo, precio, ubicacion " +
+                "GROUP BY nombre, tipo, precio, fecha_entrada, ubicacion " +
                 "HAVING SUM(cantidad) <= 10";
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql);
@@ -183,6 +183,7 @@ public class ProductoDTO {
                 p.setTipo(rs.getString("tipo"));
                 p.setPrecio(rs.getFloat("precio"));
                 p.setCantidad(rs.getInt("cantidad_total"));
+                p.setFecha_entrada(rs.getDate("fecha_entrada").toLocalDate());
 
                 Date fechaExpiracionSql = rs.getDate("fecha_expiracion");
                 if (fechaExpiracionSql != null) {

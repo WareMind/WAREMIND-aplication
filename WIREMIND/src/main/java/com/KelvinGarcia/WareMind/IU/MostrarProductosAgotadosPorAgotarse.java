@@ -152,6 +152,12 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
             System.out.println("Error al listar productos agotados: " + ex.getMessage());
             return; // Salir del método si ocurre una excepción
         }
+
+        if (productos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay productos agotados o por agotarse", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return; 
+        }
+
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("NOMBRE");
