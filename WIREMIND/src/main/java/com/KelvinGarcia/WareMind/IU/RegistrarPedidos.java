@@ -18,6 +18,7 @@ import javax.swing.GroupLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 
@@ -220,8 +221,9 @@ public class RegistrarPedidos extends JInternalFrame {
     }// </editor-fold>
 
     private String id;
-    private Producto producto;
+    private ArrayList<Producto> productos;
     int identificador;
+    ProductoDTO productoDTO = new ProductoDTO();
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt){
 
@@ -259,27 +261,25 @@ public class RegistrarPedidos extends JInternalFrame {
 
     private void salirDelNombre(java.awt.event.FocusEvent evt){
         try{
-            String nombre = txtNombre.getText();
-            ProductoDTO productoDTO = new ProductoDTO();
-            producto = productoDTO.buscarProducto(nombre);
-            if(!producto.getTipo().isEmpty()){
-                System.out.println("si llego");
-                labelPrecio.setText(String.valueOf(producto.getPrecio()));
-                labelTipo.setText(producto.getTipo());
+            String nombre = txtNombre.getText().toUpperCase();
+            productos = productoDTO.buscarProducto(nombre);
+            if(!productos.get(0).getTipo().isEmpty()){
+                labelPrecio.setText(String.valueOf(productos.get(0).getPrecio()));
+                labelTipo.setText(productos.get(0).getTipo());
             }
             else{
                 JOptionPane.showMessageDialog(this, "El producto no existe");
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "El producto no existe");
         }
     }
 
     private void editarSpinner(javax.swing.event.ChangeEvent evt){
         int cant = (Integer) spnCantidad.getValue();
-        double total = cant * producto.getPrecio();
-
-        labelTotal.setText(String.valueOf(total));
+        float total = cant * productos.get(0).getPrecio();
+        float redondeado = Math.round(total * 100.0f) / 100.0f;
+        labelTotal.setText(String.valueOf(redondeado));
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt){
@@ -287,17 +287,60 @@ public class RegistrarPedidos extends JInternalFrame {
         try{
             PedidoProductoDTO pedidoProductoDTO = new PedidoProductoDTO();
             PedidoProducto pedidoProducto = new PedidoProducto();
-            pedidoProducto.setId(producto.getId());
-            pedidoProducto.setNombre(txtNombre.getText());
+            pedidoProducto.setId(productos.get(0).getId());
+            pedidoProducto.setNombre(txtNombre.getText().toUpperCase());
             pedidoProducto.setPrecio(Float.parseFloat(labelPrecio.getText()));
             pedidoProducto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
             pedidoProducto.setIdPedido(String.valueOf(identificador));
 
-            if(pedidoProductoDTO.agragarProductoDelPedido(pedidoProducto)){
-                JOptionPane.showMessageDialog(this, "Producto agregado");
-            }else{
-                JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+            int suma = 0;
+
+            for(Producto producto : productos){
+                suma += producto.getCantidad();
             }
+            int resta = suma - pedidoProducto.getCantidad();
+
+            if(resta >= 0){
+                if(pedidoProductoDTO.agragarProductoDelPedido(pedidoProducto)){
+                    JOptionPane.showMessageDialog(this, "Producto agregado");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                }
+                if(productos.size() == 2){
+                    if(productos.get(0).getFecha_entrada().isBefore(productos.get(1).getFecha_entrada())){
+                        int x = productos.get(0).getCantidad() - pedidoProducto.getCantidad();
+                       if(x > 0){
+                           productos.get(0).setCantidad(x);
+                           productoDTO.actualizarProducto(productos.get(0));
+                       }
+                       else{
+                           productoDTO.eliminarProducto(productos.get(0));
+                           productos.get(1).setCantidad(productos.get(1).getCantidad()+x);
+                           productoDTO.actualizarProducto(productos.get(1));
+                       }
+                    }
+                    else{
+                        int x = productos.get(1).getCantidad() - pedidoProducto.getCantidad();
+                        if(x > 0){
+                            productos.get(1).setCantidad(x);
+                            productoDTO.actualizarProducto(productos.get(1));
+                        }
+                        else{
+                            productoDTO.eliminarProducto(productos.get(1));
+                            productos.get(0).setCantidad(productos.get(0).getCantidad()+x);
+                            productoDTO.actualizarProducto(productos.get(0));
+                        }
+                    }
+                }
+                else{
+                    productos.get(0).setCantidad(resta);
+                    productoDTO.actualizarProducto(productos.get(0));
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "La cantidad solicitada excede a la cantidad de stock del producto, la cantidad actual es :"+suma);
+            }
+
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

@@ -129,7 +129,7 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
         ProductoDTO productoDTO = new ProductoDTO();
 
         try{
-            if(productoDTO.eliminarProducto(producto.getId())){
+            if(productoDTO.eliminarProducto(producto)){
                 JOptionPane.showMessageDialog(this, "Eliminado correctamente");
             } else{
                 JOptionPane.showMessageDialog(this, "No se ha podido eliminar");
