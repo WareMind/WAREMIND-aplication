@@ -120,7 +120,7 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
         int indice = jTable1.getSelectedRow();
 
         if (indice == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar");
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -132,9 +132,10 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
             if(productoDTO.eliminarProducto(producto)){
                 JOptionPane.showMessageDialog(this, "Eliminado correctamente");
             } else{
-                JOptionPane.showMessageDialog(this, "No se ha podido eliminar");
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex.getMessage());
         }
         this.listar();
@@ -149,7 +150,8 @@ public class MostrarProductosAgotadosPorAgotarse extends javax.swing.JInternalFr
         try {
             productos = productoDTO.ListarProductosAgotados();
         } catch (SQLException ex) {
-            System.out.println("Error al listar productos agotados: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar productos agotados", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
             return; // Salir del método si ocurre una excepción
         }
 

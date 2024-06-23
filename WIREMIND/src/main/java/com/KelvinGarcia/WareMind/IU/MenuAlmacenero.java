@@ -5,7 +5,6 @@
 package com.KelvinGarcia.WareMind.IU;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.jPanel1;

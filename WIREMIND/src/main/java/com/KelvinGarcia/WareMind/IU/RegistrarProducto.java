@@ -236,11 +236,12 @@ public class RegistrarProducto extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Proveedor encontrado");
             }
             else{
-                JOptionPane.showMessageDialog(this, "El proveedor no esta registrado");
+                JOptionPane.showMessageDialog(this, "El proveedor no esta registrado", "Error", JOptionPane.WARNING_MESSAGE);
                 textDNI.setText("");
             }
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -251,7 +252,14 @@ public class RegistrarProducto extends JInternalFrame {
             ArrayList<Producto> productoEncontrado;
             ProductoDTO productoDTO = new ProductoDTO();
 
-            String nombre = txtNombre.getText().toUpperCase();
+            String nombre = txtNombre.getText().toUpperCase().trim();
+            Float precio = Float.parseFloat(spnPrecio.getValue().toString());
+            int cantidad = Integer.parseInt(spnCantidad.getValue().toString());
+            LocalDate fecha_entrada = LocalDate.now();
+            LocalDate fecha_expiracion = LocalDate.parse(textFecha.getText());
+            String tipo = textTipo.getText().trim();
+            String ubicacion = txtUbicacion.getText().toUpperCase().trim();
+
             productoEncontrado = productoDTO.buscarProducto(nombre);
             boolean idEncontrado;
             if (productoEncontrado.isEmpty()) {
@@ -264,33 +272,33 @@ public class RegistrarProducto extends JInternalFrame {
                 producto.setId(productoEncontrado.get(0).getId());
             }
 
-            producto.setNombre(txtNombre.getText().toUpperCase());
-            producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
-            producto.setFecha_entrada(LocalDate.now());
-            producto.setFecha_expiracion(LocalDate.parse(textFecha.getText()));
-            producto.setTipo(textTipo.getText());
-            producto.setUbicacion(txtUbicacion.getText());
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setFecha_entrada(fecha_entrada);
+            producto.setFecha_expiracion(fecha_expiracion);
+            producto.setTipo(tipo);
+            producto.setUbicacion(ubicacion);
 
             if(!productoEncontrado.isEmpty()){
                 if(productoEncontrado.get(0).getFecha_entrada() == LocalDate.now()){
-                    producto.setCantidad((Integer.parseInt(spnCantidad.getValue().toString()) + productoEncontrado.get(0).getCantidad()));
+                    producto.setCantidad((cantidad + productoEncontrado.get(0).getCantidad()));
                     productoDTO.actualizarProducto(producto);
                 }
                 else{
-                    producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+                    producto.setCantidad(cantidad);
                     if(productoDTO.agregarProducto(producto)){
                         JOptionPane.showMessageDialog(this, "Producto guardado");
                     }else{
-                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+                        JOptionPane.showMessageDialog(this, "Producto no se guardo", "Error", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
             else{
-                producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+                producto.setCantidad(cantidad);
                 if(productoDTO.agregarProducto(producto)){
                     JOptionPane.showMessageDialog(this, "Producto guardado");
                 }else{
-                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+                    JOptionPane.showMessageDialog(this, "Producto no se guardo", "Error", JOptionPane.WARNING_MESSAGE);
                 }
             }
 
@@ -299,11 +307,11 @@ public class RegistrarProducto extends JInternalFrame {
             ProveedorProductoDTO proovedorProductoDTO = new ProveedorProductoDTO();
             ProveedorProducto proveedorProducto = new ProveedorProducto();
             proveedorProducto.setId(producto.getId());
-            proveedorProducto.setNombre(txtNombre.getText().toUpperCase());
-            proveedorProducto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
-            proveedorProducto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
-            proveedorProducto.setFechaEntrada(LocalDate.now());
-            proveedorProducto.setTipo(textTipo.getText());
+            proveedorProducto.setNombre(nombre);
+            proveedorProducto.setPrecio(precio);
+            proveedorProducto.setCantidad(cantidad);
+            proveedorProducto.setFechaEntrada(fecha_entrada);
+            proveedorProducto.setTipo(tipo);
             proveedorProducto.setIdProveedor(textDNI.getText());
 
 
@@ -311,12 +319,13 @@ public class RegistrarProducto extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Producto del proveedor registrado");////
                 this.limpiar();
             } else{
-                JOptionPane.showMessageDialog(this, "No se guardÃ³ el producto del proveedor");
+                JOptionPane.showMessageDialog(this, "No se guardo el producto del proveedor", "Error", JOptionPane.WARNING_MESSAGE);
             }
 
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 

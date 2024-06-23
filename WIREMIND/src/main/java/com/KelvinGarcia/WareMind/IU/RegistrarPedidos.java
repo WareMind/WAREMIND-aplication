@@ -8,19 +8,13 @@ import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
 import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
 import com.KelvinGarcia.WareMind.DTO.PedidoProductoDTO;
 import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
-import com.KelvinGarcia.WareMind.ENTITY.Cliente;
 import com.KelvinGarcia.WareMind.ENTITY.Pedido;
 import com.KelvinGarcia.WareMind.ENTITY.PedidoProducto;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 
 /**
  * @author user
@@ -247,15 +241,16 @@ public class RegistrarPedidos extends JInternalFrame {
                 if(pedidoDTO.agragarPedido(pedido)){
                     JOptionPane.showMessageDialog(this, "Cliente encontrado");
                 }else{
-                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                    JOptionPane.showMessageDialog(this, "No se pudo guardar el pedido", "Error", JOptionPane.WARNING_MESSAGE);
                 }
             }
             else{
-                JOptionPane.showMessageDialog(this, "El cliente no esta registrado");
+                JOptionPane.showMessageDialog(this, "El cliente no esta registrado", "Error", JOptionPane.WARNING_MESSAGE);
                 textDNI.setText("");
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e);
         }
     }
 
@@ -268,18 +263,25 @@ public class RegistrarPedidos extends JInternalFrame {
                 labelTipo.setText(productos.get(0).getTipo());
             }
             else{
-                JOptionPane.showMessageDialog(this, "El producto no existe");
+                JOptionPane.showMessageDialog(this, "El producto no existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "El producto no existe");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
     private void editarSpinner(javax.swing.event.ChangeEvent evt){
         int cant = (Integer) spnCantidad.getValue();
-        float total = cant * productos.get(0).getPrecio();
-        float redondeado = Math.round(total * 100.0f) / 100.0f;
-        labelTotal.setText(String.valueOf(redondeado));
+        if(cant>0){
+            float total = cant * productos.get(0).getPrecio();
+            float redondeado = Math.round(total * 100.0f) / 100.0f;
+            labelTotal.setText(String.valueOf(redondeado));
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "La cantidad tiene que ser mayor que 0", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt){
@@ -304,7 +306,7 @@ public class RegistrarPedidos extends JInternalFrame {
                 if(pedidoProductoDTO.agragarProductoDelPedido(pedidoProducto)){
                     JOptionPane.showMessageDialog(this, "Producto agregado");
                 }else{
-                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                    JOptionPane.showMessageDialog(this, "No se agrego el producto", "Error", JOptionPane.WARNING_MESSAGE);
                 }
                 if(productos.size() == 2){
                     if(productos.get(0).getFecha_entrada().isBefore(productos.get(1).getFecha_entrada())){
@@ -338,11 +340,12 @@ public class RegistrarPedidos extends JInternalFrame {
                 }
             }
             else{
-                JOptionPane.showMessageDialog(this, "La cantidad solicitada excede a la cantidad de stock del producto, la cantidad actual es :"+suma);
+                JOptionPane.showMessageDialog(this, "La cantidad solicitada excede a la cantidad de stock del producto, la cantidad actual es :"+suma, "Error", JOptionPane.WARNING_MESSAGE);
             }
 
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
 
         this.limpiar();

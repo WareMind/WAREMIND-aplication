@@ -2,7 +2,6 @@ package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
-import com.KelvinGarcia.WareMind.ENTITY.Proveedor;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -11,14 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ProductoDTO {
 
     Conexion con = new Conexion();
 
-    public ArrayList<Producto> buscarProducto(String nombre) throws Exception {
+    public ArrayList<Producto> buscarProducto(String nombre) throws SQLException {
 
         ArrayList<Producto> productos = new ArrayList<>();
         Connection conexion = con.getConexion();
@@ -40,7 +38,8 @@ public class ProductoDTO {
                 productos.add(producto);
             }
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
@@ -79,15 +78,10 @@ public class ProductoDTO {
                 productos.add(p);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar productos vencidos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            conexion.close();
         }
         return productos;
     }
@@ -109,7 +103,8 @@ public class ProductoDTO {
 
             fueActualizado = (cantidad>0);
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
@@ -137,14 +132,15 @@ public class ProductoDTO {
 
             agregado = (cantidad > 0);
         } catch (Exception e) {
-            System.out.println("Error al agregar producto " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
         return agregado;
     }
 
-    public boolean buscarId(String id)throws Exception {
+    public boolean buscarId(String id)throws SQLException {
         Boolean buscado = false;
         Connection conexion = con.getConexion();
 
@@ -156,7 +152,8 @@ public class ProductoDTO {
                 buscado = true;
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
@@ -195,7 +192,8 @@ public class ProductoDTO {
                 productos.add(p);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar productos agotados: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
@@ -213,18 +211,12 @@ public class ProductoDTO {
 
             fueEliminado = (stmt.executeUpdate() > 0);
         } catch (Exception e) {
-            System.out.println("Error al eliminar producto " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    System.out.println("Error eliminando "+e.getMessage());
-                }
-            }
+            conn.close();
         }
         return fueEliminado;
     }
-
 
 }

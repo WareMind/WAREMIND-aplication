@@ -183,13 +183,24 @@ public class RegistrarEmpleado extends JInternalFrame {
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
+            String dni = txtDNI.getText().trim();
+            String nombre = txtNombre1.getText().trim();
+            String contraseña = txtContraseña.getText().trim();
+            String puesto = boxPuesto.getSelectedItem().toString();
+            String telefono = txtTelefono.getText().trim();
+
+            if(dni.isEmpty() || nombre.isEmpty() || contraseña.isEmpty() || puesto.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Campos vacios", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             Empleado empleado = new Empleado();
 
-            empleado.setId(txtDNI.getText());
-            empleado.setNombre(txtNombre1.getText());
-            empleado.setContraseña(txtContraseña.getText());
-            empleado.setPuesto(boxPuesto.getSelectedItem().toString());
-            empleado.setTelefono(txtTelefono.getText());
+            empleado.setId(dni);
+            empleado.setNombre(nombre);
+            empleado.setContraseña(contraseña);
+            empleado.setPuesto(puesto);
+            empleado.setTelefono(telefono);
 
             EmpleadoDTO empleadoDTO = new EmpleadoDTO();
 
@@ -197,10 +208,11 @@ public class RegistrarEmpleado extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Guardado correctamente");
                 this.limpiar();
             } else {
-                JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                JOptionPane.showMessageDialog(this, "Proveedor ya existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 

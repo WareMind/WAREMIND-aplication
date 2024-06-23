@@ -191,10 +191,11 @@ public class ActualizarProductos extends JInternalFrame {
                 txtUbicacion.setText(producto.get(0).getUbicacion());
             }
             else{
-                JOptionPane.showMessageDialog(this, "El producto no existe");
+                JOptionPane.showMessageDialog(this, "El producto no existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -208,11 +209,12 @@ public class ActualizarProductos extends JInternalFrame {
             if(productoDTO.actualizarProducto(producto.get(0))){
                 JOptionPane.showMessageDialog(this, "Producto actualizado");
             }else{
-                JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                JOptionPane.showMessageDialog(this, "No se actualizo el producto", "Error", JOptionPane.WARNING_MESSAGE);
             }
 
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 

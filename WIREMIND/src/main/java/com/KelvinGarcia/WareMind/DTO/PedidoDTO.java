@@ -12,7 +12,7 @@ public class PedidoDTO {
 
     private Conexion con = new Conexion();
 
-    public boolean agragarPedido(Pedido pedido) throws Exception {
+    public boolean agragarPedido(Pedido pedido) throws SQLException {
         boolean fueAgregado = false;
         Connection conexion = con.getConexion();
 
@@ -28,14 +28,15 @@ public class PedidoDTO {
             fueAgregado = (cantidad > 0);
 
         } catch (Exception e) {
-            System.out.println("Error al agregar pedido" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
         return fueAgregado;
     }
 
-    public boolean buscarId(String id) throws Exception {
+    public boolean buscarId(String id) throws SQLException {
         Boolean buscado = false;
         Connection conexion = con.getConexion();
 
@@ -47,14 +48,15 @@ public class PedidoDTO {
                 buscado = true;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
         return buscado;
     }
 
-    public ArrayList<Pedido> ListarPedidos(String id){
+    public ArrayList<Pedido> ListarPedidos(String id) throws SQLException {
         ArrayList<Pedido> pedidos = new ArrayList<>();
         Connection conexion = con.getConexion();
         try {
@@ -76,20 +78,15 @@ public class PedidoDTO {
                 pedidos.add(p);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar los pedidos" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            conexion.close();
         }
         return pedidos;
     }
 
-    public ArrayList<Pedido> ListarPedidosDeHoy() throws Exception {
+    public ArrayList<Pedido> ListarPedidosDeHoy() throws SQLException {
         Connection conexion = con.getConexion();
         ArrayList<Pedido> pedidos = new ArrayList<>();
         try{
@@ -111,14 +108,15 @@ public class PedidoDTO {
                 pedidos.add(p);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
         return pedidos;
     }
 
-    public String buscarClienteDelPedido(String id) throws Exception {
+    public String buscarClienteDelPedido(String id) throws SQLException {
         Connection conexion = con.getConexion();
         String nombre = null;
         try{
@@ -134,7 +132,8 @@ public class PedidoDTO {
                 nombre = resultado.getString("nombre");
             }
         }catch (Exception e){
-
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }

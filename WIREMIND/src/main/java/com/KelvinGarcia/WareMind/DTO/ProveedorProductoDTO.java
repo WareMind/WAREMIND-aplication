@@ -3,13 +3,14 @@ package com.KelvinGarcia.WareMind.DTO;
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.ProveedorProducto;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ProveedorProductoDTO {
     private Conexion con = new Conexion();
 
-    public boolean agregarProductoDelProveedor(ProveedorProducto proveedorProducto)throws Exception {
+    public boolean agregarProductoDelProveedor(ProveedorProducto proveedorProducto)throws SQLException {
         boolean fueAgregado = false;
         Connection conexion = con.getConexion();
 
@@ -29,14 +30,15 @@ public class ProveedorProductoDTO {
             fueAgregado = (cantidad > 0);
 
         }catch (Exception e){
-            System.out.println("Error al agregar el producto"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
         return fueAgregado;
     }
 
-    public ArrayList<ProveedorProducto> listarProductos(String id){
+    public ArrayList<ProveedorProducto> listarProductos(String id) throws SQLException {
         ArrayList<ProveedorProducto> productos = new ArrayList<>();
         Connection conexion = con.getConexion();
         try {
@@ -58,15 +60,10 @@ public class ProveedorProductoDTO {
                 productos.add(prod);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar productos" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            conexion.close();
         }
         return productos;
     }

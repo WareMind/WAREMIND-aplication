@@ -31,7 +31,8 @@ public class EmpleadoDTO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
         } finally {
             conexion.close();
         }
@@ -49,7 +50,8 @@ public class EmpleadoDTO {
                 puesto = resultado.getString("puesto");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
         } finally {
             conexion.close();
         }
@@ -76,7 +78,8 @@ public class EmpleadoDTO {
 
             fueAgregado = (cantidad>0);
         } catch (Exception e) {
-            System.out.println("Error al agregar al empleado "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
@@ -105,7 +108,7 @@ public class EmpleadoDTO {
             }
 
             if (camposActualizados.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No se han ingresado campos para actualizar.");
+                JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
 
@@ -135,15 +138,10 @@ public class EmpleadoDTO {
 
             fueActualizado = (cantidad > 0);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar al empleado: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            conexion.close();
         }
         return fueActualizado;
     }
@@ -162,7 +160,8 @@ public class EmpleadoDTO {
                 idEmpleado = rs.getString("id_empleado");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el ID del empleado: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         } finally {
             conexion.close();
         }
@@ -185,7 +184,8 @@ public class EmpleadoDTO {
                 empleado.setTelefono(resultado.getString("telefono"));
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }

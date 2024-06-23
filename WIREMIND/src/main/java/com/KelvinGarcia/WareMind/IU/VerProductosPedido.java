@@ -6,7 +6,6 @@ package com.KelvinGarcia.WareMind.IU;
 
 import com.KelvinGarcia.WareMind.DTO.PedidoProductoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.PedidoProducto;
-import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -154,11 +153,11 @@ public class VerProductosPedido extends JInternalFrame {
             productos = pedidos.reportarProductos(id);
 
             if(productos.isEmpty()){
-                JOptionPane.showMessageDialog(this, "No existe el pedido");
+                JOptionPane.showMessageDialog(this, "No existe el pedido", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }catch (Exception e) {
-            System.out.println("Error al listar los productos: " + e.getMessage());
-            txtID.setText("");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
 
         for(PedidoProducto producto: productos){

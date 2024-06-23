@@ -59,20 +59,10 @@ public class IniciarSesion extends JFrame {
         textNombre.setBackground(new java.awt.Color(255, 255, 255));
         textNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         textNombre.setPreferredSize(new java.awt.Dimension(68, 40));
-        textNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNombreActionPerformed(evt);
-            }
-        });
 
         textContraseña.setBackground(new java.awt.Color(255, 255, 255));
         textContraseña.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         textContraseña.setPreferredSize(new java.awt.Dimension(68, 40));
-        textContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textContraseñaActionPerformed(evt);
-            }
-        });
 
         btnInicio.setBackground(new java.awt.Color(255, 255, 255));
         btnInicio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -203,21 +193,13 @@ public class IniciarSesion extends JFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "El nombre o la contraseña son incorrectos.");
+                JOptionPane.showMessageDialog(null, "El nombre o la contraseña son incorrectos", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
-
-    private void textNombreActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void textContraseñaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnInicio;

@@ -1,24 +1,14 @@
 package com.KelvinGarcia.WareMind.IU;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
-import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
-import com.KelvinGarcia.WareMind.DTO.EmpleadoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Cliente;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * @author user
  */
 public class RegistrarCliente extends JInternalFrame {
-    ArrayList<Cliente> listaClientes= new ArrayList<Cliente>();
-    private Conexion con= new Conexion();
 
     public RegistrarCliente() {
         initComponents();
@@ -68,11 +58,6 @@ public class RegistrarCliente extends JInternalFrame {
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
         txtCorreo.setMinimumSize(new java.awt.Dimension(68, 40));
         txtCorreo.setPreferredSize(new java.awt.Dimension(75, 40));
-        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCorreoActionPerformed(evt);
-            }
-        });
 
         txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -168,9 +153,6 @@ public class RegistrarCliente extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
         txtCorreo.setText("");
         txtDNI.setText("");
@@ -181,23 +163,34 @@ public class RegistrarCliente extends JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         
         try {
+            String nombre = txtNombre.getText().trim();
+            String dni = txtDNI.getText().trim();
+            String email = txtCorreo.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+
+
+            if (nombre.isEmpty() || dni.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Campos de dni o nombre vacios", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             Cliente cliente = new Cliente();
 
-            cliente.setNombre(txtNombre.getText());
-            cliente.setId(txtDNI.getText());
-            cliente.setEmail(txtCorreo.getText());
-            cliente.setTelefono(txtTelefono.getText());
+            cliente.setNombre(nombre);
+            cliente.setId(dni);
+            cliente.setEmail(email);
+            cliente.setTelefono(telefono);
 
             ClienteDTO clienteDTO = new ClienteDTO();
 
             if (clienteDTO.agregarCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Guardado correctamente");
             } else {
-                JOptionPane.showMessageDialog(this, "Cliente ya existe");
+                JOptionPane.showMessageDialog(this, "Cliente ya existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }
         catch(Exception ex){
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
             }
         }
 

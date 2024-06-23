@@ -5,7 +5,6 @@
 package com.KelvinGarcia.WareMind.IU;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
 import static com.KelvinGarcia.WareMind.IU.IniciarSesion.jPanel1;
@@ -18,6 +17,7 @@ public class MenuVendedor extends JInternalFrame {
     private RegistrarCliente registrarCliente;
     private RegistrarPedidos registrarPedidos;
     private VerProductosPedido verProductosPedido;
+    private VerPedidosCliente verPedidosCliente;
     private ActualizarInfoEmpleado actualizarInfoEmpleado;
     private String idEmpleado;
 
@@ -34,12 +34,13 @@ public class MenuVendedor extends JInternalFrame {
         btnVerProductosPedido = new javax.swing.JButton();
         btnActualizarInformacionEmpleado = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnVerPedidosCliente = new javax.swing.JButton();
 
         setBackground(java.awt.Color.darkGray);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Menu vendedor");
+        setTitle("Menu Vendedor");
         setPreferredSize(new java.awt.Dimension(670, 550));
 
         btnRegistrarPedidos.setBackground(new java.awt.Color(255, 255, 255));
@@ -92,6 +93,16 @@ public class MenuVendedor extends JInternalFrame {
             }
         });
 
+        btnVerPedidosCliente.setBackground(new java.awt.Color(255, 255, 255));
+        btnVerPedidosCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVerPedidosCliente.setForeground(new java.awt.Color(0, 0, 0));
+        btnVerPedidosCliente.setText("VER PEDIDOS DEL CLIENTE");
+        btnVerPedidosCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerPedidosClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,7 +115,8 @@ public class MenuVendedor extends JInternalFrame {
                                                         .addComponent(btnRegistrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnRegistrarPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnVerProductosPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(btnActualizarInformacionEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)))
+                                                        .addComponent(btnActualizarInformacionEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                                                        .addComponent(btnVerPedidosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(237, 237, 237)
                                                 .addComponent(btnCerrarSesion)))
@@ -113,15 +125,17 @@ public class MenuVendedor extends JInternalFrame {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
+                                .addGap(50, 50, 50)
                                 .addComponent(btnRegistrarCliente)
-                                .addGap(57, 57, 57)
+                                .addGap(45, 45, 45)
                                 .addComponent(btnRegistrarPedidos)
-                                .addGap(51, 51, 51)
+                                .addGap(41, 41, 41)
+                                .addComponent(btnVerPedidosCliente)
+                                .addGap(42, 42, 42)
                                 .addComponent(btnVerProductosPedido)
-                                .addGap(61, 61, 61)
+                                .addGap(43, 43, 43)
                                 .addComponent(btnActualizarInformacionEmpleado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                                 .addComponent(btnCerrarSesion)
                                 .addGap(41, 41, 41))
         );
@@ -142,6 +156,22 @@ public class MenuVendedor extends JInternalFrame {
                 desktop.add(registrarPedidos);
             }
             registrarPedidos.setVisible(true);
+        }
+    }
+
+    private void btnVerPedidosClienteActionPerformed(java.awt.event.ActionEvent evt) {
+        if(evt.getSource()==btnVerPedidosCliente){
+            if(verPedidosCliente!=null){
+                desktop.remove(verPedidosCliente);
+                verPedidosCliente=null;
+                desktop.revalidate();
+                desktop.repaint();
+            }
+            else{
+                verPedidosCliente= new VerPedidosCliente();
+                desktop.add(verPedidosCliente);
+            }
+            verPedidosCliente.setVisible(true);
         }
     }
 
@@ -206,6 +236,7 @@ public class MenuVendedor extends JInternalFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private javax.swing.JButton btnActualizarInformacionEmpleado;
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnVerPedidosCliente;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnRegistrarPedidos;
     private javax.swing.JButton btnVerProductosPedido;

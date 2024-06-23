@@ -2,6 +2,7 @@ package com.KelvinGarcia.WareMind.BD;
 
 import lombok.SneakyThrows;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ public class Conexion {
             con = DriverManager.getConnection(conexionURL, usuario, contrasenia);
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Conexion fallida con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex.toString());
         }
 

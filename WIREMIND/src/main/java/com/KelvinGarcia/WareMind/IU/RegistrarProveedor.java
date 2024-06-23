@@ -8,7 +8,6 @@ import com.KelvinGarcia.WareMind.DTO.ProveedorDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Proveedor;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 /**
  * @author user
@@ -158,12 +157,22 @@ public class RegistrarProveedor extends JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
+            String dni = txtDNI.getText().trim();
+            String nombre = txtNombre.getText().trim();
+            String correo = txtCorreo.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+
+            if(dni.isEmpty() || nombre.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Campos de dni o nombre vacios", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             Proveedor proveedor = new Proveedor();
 
-            proveedor.setId(txtDNI.getText());
-            proveedor.setNombre(txtNombre.getText());
-            proveedor.setEmail(txtCorreo.getText());
-            proveedor.setTelefono(txtTelefono.getText());
+            proveedor.setId(dni);
+            proveedor.setNombre(nombre);
+            proveedor.setEmail(correo);
+            proveedor.setTelefono(telefono);
 
             ProveedorDTO proveedorDTO = new ProveedorDTO();
 
@@ -171,10 +180,11 @@ public class RegistrarProveedor extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Guardado correctamente");
                 this.limpiar();
             } else {
-                JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                JOptionPane.showMessageDialog(this, "Proveedor ya existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {

@@ -178,11 +178,12 @@ public class VerPedidosCliente extends JInternalFrame {
                 this.listar();
                 JOptionPane.showMessageDialog(this, "Cliente encontrado");
             }else{
-                JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Error", JOptionPane.WARNING_MESSAGE);
                 txtNombre.setText("");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -193,11 +194,11 @@ public class VerPedidosCliente extends JInternalFrame {
         try {
             pedidos = pedidoDTO.ListarPedidos(id);
             if (pedidos.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay pedidos");
+                JOptionPane.showMessageDialog(this, "No hay pedidos", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al listar los pedidos: " + e.getMessage());
-            txtNombre.setText("");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
 
         DefaultTableModel modelo = new DefaultTableModel();

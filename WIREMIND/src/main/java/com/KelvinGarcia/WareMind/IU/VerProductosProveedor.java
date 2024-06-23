@@ -9,7 +9,6 @@ import com.KelvinGarcia.WareMind.DTO.ProveedorProductoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.ProveedorProducto;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
@@ -131,11 +130,12 @@ public class VerProductosProveedor extends JInternalFrame {
                 this.listar();
                 JOptionPane.showMessageDialog(this, "Proveedor encontrado");
             }else{
-                JOptionPane.showMessageDialog(this, "Proveedor no registrado");
+                JOptionPane.showMessageDialog(this, "Proveedor no registrado", "Error", JOptionPane.WARNING_MESSAGE);
                 txtNombre.setText("");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -146,11 +146,11 @@ public class VerProductosProveedor extends JInternalFrame {
         try {
             productos = productoDTO.listarProductos(id);
             if (productos.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No existen productos");
+                JOptionPane.showMessageDialog(this, "No existen productos", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al listar productos: " + e.getMessage());
-            txtNombre.setText("");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
 
         DefaultTableModel model = new DefaultTableModel();

@@ -8,7 +8,6 @@ import com.KelvinGarcia.WareMind.DTO.EmpleadoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Empleado;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 /**
  * @author user
@@ -71,11 +70,6 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
         txtContraseña.setForeground(new java.awt.Color(0, 0, 0));
         txtContraseña.setMinimumSize(new java.awt.Dimension(68, 40));
         txtContraseña.setPreferredSize(new java.awt.Dimension(75, 40));
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
-            }
-        });
 
         boxPuesto.setBackground(new java.awt.Color(255, 255, 255));
         boxPuesto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -195,9 +189,6 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
         this.limpiar();
@@ -210,7 +201,7 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
             empleado = empleadoDTO.buscarEmpleadoID(id);
 
             if (id.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Ingrese el DNI del empleado");
+                JOptionPane.showMessageDialog(null, "Ingrese el DNI del empleado", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -220,10 +211,11 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
                 boxPuesto.setSelectedItem(empleado.getPuesto());
                 txtTelefono.setText(empleado.getTelefono());
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró el DNI");
+                JOptionPane.showMessageDialog(this, "No se encontró el DNI", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -238,10 +230,11 @@ public class ActualizarInfoAdministrador extends JInternalFrame {
             if(empleadoDTO.actualizarDatos(txtDNI.getText(), empleado)) {
                 JOptionPane.showMessageDialog(this, "Datos actualizados exitosamente");
             } else{
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar el ID");
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }
 

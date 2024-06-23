@@ -8,7 +8,6 @@ import com.KelvinGarcia.WareMind.DTO.EmpleadoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Empleado;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 
 /**
  * @author user
@@ -63,11 +62,6 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
         txtContraseña.setForeground(new java.awt.Color(0, 0, 0));
         txtContraseña.setMinimumSize(new java.awt.Dimension(68, 40));
         txtContraseña.setPreferredSize(new java.awt.Dimension(75, 40));
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
-            }
-        });
 
         txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -128,10 +122,6 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             EmpleadoDTO empleadoDTO = new EmpleadoDTO();
@@ -140,7 +130,7 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
             empleado.setTelefono(txtTelefono.getText());
 
             if (empleado.getNombre().isEmpty() && empleado.getContraseña().isEmpty() && empleado.getTelefono().isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "Ingrese datos en los campos que desee actualizar");
+                JOptionPane.showMessageDialog(null, "Ingrese datos en los campos que desee actualizar", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -151,10 +141,11 @@ public class ActualizarInfoEmpleado extends JInternalFrame {
                 this.limpiar();
             }
             else{
-                JOptionPane.showMessageDialog(rootPane, "Error al actualizar el empleado");
+                JOptionPane.showMessageDialog(rootPane, "Error al actualizar el empleado", "Error", JOptionPane.WARNING_MESSAGE);
                 this.limpiar();
             }
         } catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex.getMessage());
         }
     }

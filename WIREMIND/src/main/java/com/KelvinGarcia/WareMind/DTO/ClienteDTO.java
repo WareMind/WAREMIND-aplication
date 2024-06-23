@@ -13,7 +13,7 @@ public class ClienteDTO {
 
     Conexion con = new Conexion();
 
-    public boolean buscarDNI(String dni)throws Exception {
+    public boolean buscarDNI(String dni)throws SQLException {
         Boolean buscado = false;
         Connection conexion = con.getConexion();
 
@@ -25,7 +25,8 @@ public class ClienteDTO {
                 buscado = true;
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
@@ -48,7 +49,8 @@ public class ClienteDTO {
 
             fueRegistrado = (cantidad > 0);
         } catch (Exception e) {
-            System.out.println("Error al agregar al empleado " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }

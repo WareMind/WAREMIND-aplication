@@ -2,10 +2,8 @@ package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
 import com.KelvinGarcia.WareMind.ENTITY.PedidoProducto;
-import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +14,7 @@ public class PedidoProductoDTO {
 
     private Conexion con = new Conexion();
 
-    public boolean agragarProductoDelPedido(PedidoProducto pedidoProducto)throws Exception {
+    public boolean agragarProductoDelPedido(PedidoProducto pedidoProducto)throws SQLException {
         boolean fueAgregado = false;
         Connection conexion = con.getConexion();
 
@@ -34,14 +32,15 @@ public class PedidoProductoDTO {
             fueAgregado = (cantidad > 0);
 
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al agregar el producto"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
             conexion.close();
         }
         return fueAgregado;
     }
 
-    public ArrayList<PedidoProducto> reportarProductos(String id)throws IOException{
+    public ArrayList<PedidoProducto> reportarProductos(String id)throws SQLException{
         ArrayList<PedidoProducto> productos= new ArrayList<>();
         Connection conexion = con.getConexion();
         try{
@@ -59,15 +58,10 @@ public class PedidoProductoDTO {
                 productos.add(producto);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al listar los pedidos" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
         }finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            conexion.close();
         }
         return productos;
     }
