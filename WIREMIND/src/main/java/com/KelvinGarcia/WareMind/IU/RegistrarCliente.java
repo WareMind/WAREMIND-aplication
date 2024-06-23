@@ -184,12 +184,23 @@ public class RegistrarCliente extends JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         
         try {
+            String nombre = txtNombre.getText().trim();
+            String dni = txtDNI.getText().trim();
+            String email = txtCorreo.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+
+
+            if (nombre.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+                return;
+            }
+
             Cliente cliente = new Cliente();
 
-            cliente.setNombre(txtNombre.getText());
-            cliente.setId(txtDNI.getText());
-            cliente.setEmail(txtCorreo.getText());
-            cliente.setTelefono(txtTelefono.getText());
+            cliente.setNombre(nombre);
+            cliente.setId(dni);
+            cliente.setEmail(email);
+            cliente.setTelefono(telefono);
 
             ClienteDTO clienteDTO = new ClienteDTO();
 
