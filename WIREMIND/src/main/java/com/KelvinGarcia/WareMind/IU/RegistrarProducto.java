@@ -4,22 +4,13 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
-import com.KelvinGarcia.WareMind.DTO.*;
-import com.KelvinGarcia.WareMind.ENTITY.*;
-
 import com.KelvinGarcia.WareMind.DTO.ProveedorDTO;
-import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
-import com.KelvinGarcia.WareMind.DTO.ProovedorProductoDTO;
+import com.KelvinGarcia.WareMind.DTO.ProveedorProductoDTO;
 import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
-import com.KelvinGarcia.WareMind.ENTITY.Proveedor;
-import com.KelvinGarcia.WareMind.ENTITY.Pedido;
 import com.KelvinGarcia.WareMind.ENTITY.ProveedorProducto;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -305,7 +296,7 @@ public class RegistrarProducto extends JInternalFrame {
 
 
 
-            ProovedorProductoDTO proovedorProductoDTO = new ProovedorProductoDTO();
+            ProveedorProductoDTO proovedorProductoDTO = new ProveedorProductoDTO();
             ProveedorProducto proveedorProducto = new ProveedorProducto();
             proveedorProducto.setId(producto.getId());
             proveedorProducto.setNombre(txtNombre.getText().toUpperCase());

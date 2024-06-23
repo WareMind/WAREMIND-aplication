@@ -4,8 +4,14 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import com.KelvinGarcia.WareMind.DTO.ProveedorDTO;
+import com.KelvinGarcia.WareMind.DTO.ProveedorProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.ProveedorProducto;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  * @author user
@@ -118,7 +124,54 @@ public class VerProductosProveedor extends JInternalFrame {
     }// </editor-fold>
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String dni= txtNombre.getText();
+        ProveedorDTO prov = new ProveedorDTO();
+        try {
+            if(prov.buscarDNI(dni)){
+                this.listar();
+                JOptionPane.showMessageDialog(this, "Proveedor encontrado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Proveedor no registrado");
+                txtNombre.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void listar() {
+        ProveedorProductoDTO productoDTO = new ProveedorProductoDTO();
+        ArrayList<ProveedorProducto> productos = null;
+        String id = txtNombre.getText();
+        try {
+            productos = productoDTO.listarProductos(id);
+            if (productos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No existen productos");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al listar productos: " + e.getMessage());
+            txtNombre.setText("");
+        }
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NOMBRE");
+        model.addColumn("PRECIO");
+        model.addColumn("CANTIDAD");
+        model.addColumn("FECHA");
+        model.addColumn("TIPO");
+
+        for(ProveedorProducto producto : productos){
+            String[] row = new String[10];
+            row[0] = producto.getId();
+            row[1] = producto.getNombre();
+            row[2] = String.valueOf(producto.getPrecio());
+            row[3] = String.valueOf(producto.getCantidad());
+            row[4] = String.valueOf(producto.getFechaEntrada());
+            row[5] = producto.getTipo();
+            model.addRow(row);
+        }
+        jTable1.setModel(model);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
