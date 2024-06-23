@@ -8,6 +8,7 @@ import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * @author user
@@ -172,7 +173,7 @@ public class ActualizarProductos extends JInternalFrame {
         pack();
     }// </editor-fold>
 
-    private Producto producto;
+    private ArrayList<Producto> producto;
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
         this.limpiar();
@@ -182,12 +183,12 @@ public class ActualizarProductos extends JInternalFrame {
 
         try{
             ProductoDTO productoDTO = new ProductoDTO();
-            String nombre = txtNombre.getText();
+            String nombre = txtNombre.getText().toUpperCase();
             producto = productoDTO.buscarProducto(nombre);
-            if(!producto.getNombre().isEmpty()){
-                spnPrecio.setValue(producto.getPrecio());
-                spnCantidad.setValue(producto.getCantidad());
-                txtUbicacion.setText(producto.getUbicacion());
+            if(!producto.isEmpty()){
+                spnPrecio.setValue(producto.get(0).getPrecio());
+                spnCantidad.setValue(producto.get(0).getCantidad());
+                txtUbicacion.setText(producto.get(0).getUbicacion());
             }
             else{
                 JOptionPane.showMessageDialog(this, "El producto no existe");
@@ -200,11 +201,11 @@ public class ActualizarProductos extends JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             ProductoDTO productoDTO = new ProductoDTO();
-            producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
-            producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
-            producto.setUbicacion(txtUbicacion.getText());
+            producto.get(0).setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
+            producto.get(0).setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+            producto.get(0).setUbicacion(txtUbicacion.getText());
 
-            if(productoDTO.actualizarProducto(producto)){
+            if(productoDTO.actualizarProducto(producto.get(0))){
                 JOptionPane.showMessageDialog(this, "Producto actualizado");
             }else{
                 JOptionPane.showMessageDialog(this, "Ha ocurrido un error");

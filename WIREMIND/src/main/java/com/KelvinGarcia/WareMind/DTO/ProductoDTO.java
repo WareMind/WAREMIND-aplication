@@ -18,30 +18,33 @@ public class ProductoDTO {
 
     Conexion con = new Conexion();
 
-    public Producto buscarProducto(String nombre) throws Exception {
+    public ArrayList<Producto> buscarProducto(String nombre) throws Exception {
 
-
-        Producto producto = new Producto();
+        ArrayList<Producto> productos = new ArrayList<>();
         Connection conexion = con.getConexion();
 
         try {
             String sql = "select * from producto where nombre = '" + nombre + "'";
             PreparedStatement statement = conexion.prepareStatement(sql);
             ResultSet resultado = statement.executeQuery();
-            if (resultado.next()) {
+            while(resultado.next()) {
+                Producto producto = new Producto();
                 producto.setId(resultado.getString("id_producto"));
                 producto.setNombre(resultado.getString("nombre"));
                 producto.setPrecio(resultado.getFloat("precio"));
                 producto.setCantidad(resultado.getInt("cantidad"));
+                producto.setFecha_entrada(resultado.getDate("fecha_entrada").toLocalDate());
+                producto.setFecha_expiracion(resultado.getDate("fecha_expiracion").toLocalDate());
                 producto.setTipo(resultado.getString("tipo"));
                 producto.setUbicacion(resultado.getString("ubicacion"));
+                productos.add(producto);
             }
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos: " + e.getMessage());
         }finally {
             conexion.close();
         }
-        return producto;
+        return productos;
     }
 
     public ArrayList<Producto> ListarProductosVencidos() throws SQLException {
@@ -96,7 +99,8 @@ public class ProductoDTO {
             String sql = "UPDATE producto SET precio = "+producto.getPrecio()
                     +", cantidad = "+producto.getCantidad()
                     +", ubicacion = '"+producto.getUbicacion()+"'"
-                    +" WHERE id_producto = '"+producto.getId()+"'";
+                    +" WHERE id_producto = '"+producto.getId()+"'"
+                    +" AND fecha_entrada = '"+Date.valueOf(producto.getFecha_entrada())+"'";
 
             PreparedStatement stmt = conexion.prepareStatement(sql);
             stmt.executeUpdate();
@@ -197,15 +201,14 @@ public class ProductoDTO {
         return productos;
     }
 
-
-    public boolean eliminarProducto(String id) throws SQLException {
+    public boolean eliminarProducto(Producto producto) throws SQLException {
         boolean fueEliminado = false;
         Connection conn = con.getConexion();
 
         try {
-            String sql = "DELETE FROM producto WHERE id_producto = ?";
+            String sql = "DELETE FROM producto WHERE id_producto = ? AND fecha_entrada = '"+Date.valueOf(producto.getFecha_entrada())+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id); // Usa setString porque id es de tipo String
+            stmt.setString(1, producto.getId()); // Usa setString porque id es de tipo String
 
             fueEliminado = (stmt.executeUpdate() > 0);
         } catch (Exception e) {
