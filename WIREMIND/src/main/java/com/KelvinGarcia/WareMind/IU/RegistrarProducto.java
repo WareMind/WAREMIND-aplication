@@ -20,6 +20,7 @@ import javax.swing.GroupLayout;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 /**
@@ -256,41 +257,58 @@ public class RegistrarProducto extends JInternalFrame {
 
         try {
             Producto producto = new Producto();
-            Producto productoEncontrado;
+            ArrayList<Producto> productoEncontrado;
             ProductoDTO productoDTO = new ProductoDTO();
 
-            String nombre=txtNombre.getText();
+            String nombre = txtNombre.getText().toUpperCase();
             productoEncontrado = productoDTO.buscarProducto(nombre);
             boolean idEncontrado;
-            if(productoEncontrado.getNombre()==null){
+            if (productoEncontrado.isEmpty()) {
                 do {
                     id = obtenerId();
                     idEncontrado = productoDTO.buscarId(id);
                 } while (!idEncontrado);
                 producto.setId(id);
-            }
-            else{
-                producto.setId(productoEncontrado.getId());
+            } else {
+                producto.setId(productoEncontrado.get(0).getId());
             }
 
-            producto.setNombre(txtNombre.getText());
+            producto.setNombre(txtNombre.getText().toUpperCase());
             producto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
-            producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
             producto.setFecha_entrada(LocalDate.now());
             producto.setFecha_expiracion(LocalDate.parse(textFecha.getText()));
             producto.setTipo(textTipo.getText());
             producto.setUbicacion(txtUbicacion.getText());
 
-            if(productoDTO.agregarProducto(producto)){
-                JOptionPane.showMessageDialog(this, "Producto guardado");
-            }else{
-                JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+            if(!productoEncontrado.isEmpty()){
+                if(productoEncontrado.get(0).getFecha_entrada() == LocalDate.now()){
+                    producto.setCantidad((Integer.parseInt(spnCantidad.getValue().toString()) + productoEncontrado.get(0).getCantidad()));
+                    productoDTO.actualizarProducto(producto);
+                }
+                else{
+                    producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+                    if(productoDTO.agregarProducto(producto)){
+                        JOptionPane.showMessageDialog(this, "Producto guardado");
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+                    }
+                }
             }
+            else{
+                producto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+                if(productoDTO.agregarProducto(producto)){
+                    JOptionPane.showMessageDialog(this, "Producto guardado");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el producto");
+                }
+            }
+
+
 
             ProovedorProductoDTO proovedorProductoDTO = new ProovedorProductoDTO();
             ProveedorProducto proveedorProducto = new ProveedorProducto();
             proveedorProducto.setId(producto.getId());
-            proveedorProducto.setNombre(txtNombre.getText());
+            proveedorProducto.setNombre(txtNombre.getText().toUpperCase());
             proveedorProducto.setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
             proveedorProducto.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
             proveedorProducto.setFechaEntrada(LocalDate.now());
