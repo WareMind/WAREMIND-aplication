@@ -1,6 +1,7 @@
 package com.KelvinGarcia.WareMind.DTO;
 
 import com.KelvinGarcia.WareMind.BD.Conexion;
+import com.KelvinGarcia.WareMind.ENTITY.Pedido;
 import com.KelvinGarcia.WareMind.ENTITY.Producto;
 import com.KelvinGarcia.WareMind.ENTITY.Proveedor;
 
@@ -225,6 +226,41 @@ public class ProductoDTO {
             }
         }
         return fueEliminado;
+    }
+
+    public ArrayList<Producto> ListarProductos(String id){
+        ArrayList<Producto> productos = new ArrayList<>();
+        Connection conexion = con.getConexion();
+        try {
+            String sql = "select prp.id_producto, prp.nombre, prp.precio, prp.cantidad, prp.fecha_entrada, prp.tipo from Proveedor_Producto prp " +
+                    "where prp.id_proveedor = '"+id+"'"+
+                    "group by prp.id_producto, prp.nombre, prp.precio, prp.cantidad, prp.fecha_entrada, prp.tipo";
+
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Producto prod = new Producto();
+                prod.setId(rs.getString("id_producto"));
+                prod.setNombre(rs.getString("nombre"));
+                prod.setPrecio(rs.getFloat("precio"));
+                prod.setCantidad(rs.getInt("cantidad"));
+                prod.setFecha_entrada(rs.getDate("fecha_entrada").toLocalDate());
+                prod.setTipo(rs.getString("tipo"));
+                productos.add(prod);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar productos" + e.getMessage());
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
+        }
+        return productos;
     }
 
 

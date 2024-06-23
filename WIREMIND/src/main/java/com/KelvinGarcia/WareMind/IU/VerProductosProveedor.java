@@ -4,13 +4,30 @@
 
 package com.KelvinGarcia.WareMind.IU;
 
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+
+import com.KelvinGarcia.WareMind.DTO.ClienteDTO;
+import com.KelvinGarcia.WareMind.DTO.PedidoDTO;
+import com.KelvinGarcia.WareMind.DTO.ProveedorDTO;
+import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
+import com.KelvinGarcia.WareMind.ENTITY.Pedido;
+import com.KelvinGarcia.WareMind.ENTITY.Producto;
+
+import static com.KelvinGarcia.WareMind.IU.IniciarSesion.desktop;
+
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author user
  */
 public class VerProductosProveedor extends JInternalFrame {
+
+    private VerProductosProveedor verProductosProveedor;
     public VerProductosProveedor() {
         initComponents();
     }
@@ -119,6 +136,53 @@ public class VerProductosProveedor extends JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        String dni= txtNombre.getText();
+        ProveedorDTO prov = new ProveedorDTO();
+        try {
+            if(prov.buscarDNI(dni)){
+                this.listar();
+                JOptionPane.showMessageDialog(this, "Proveedor encontrado");
+            }else{
+                JOptionPane.showMessageDialog(this, "Proveedor no registrado");
+                txtNombre.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    private void listar() {
+        ProductoDTO productoDTO = new ProductoDTO();
+        ArrayList<Producto> productos = null;
+        String id = txtNombre.getText();
+        try {
+            productos = productoDTO.ListarProductos(id);
+            if (productos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No existen productos");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al listar productos: " + e.getMessage());
+            txtNombre.setText("");
+        }
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NOMBRE");
+        model.addColumn("PRECIO");
+        model.addColumn("CANTIDAD");
+        model.addColumn("FECHA");
+        model.addColumn("TIPO");
+
+        for(Producto producto : productos){
+            String[] row = new String[10];
+            row[0] = producto.getId();
+            row[1] = producto.getNombre();
+            row[2] = String.valueOf(producto.getPrecio());
+            row[3] = String.valueOf(producto.getCantidad());
+            row[4] = String.valueOf(producto.getFecha_entrada());
+            row[5] = producto.getTipo();
+            model.addRow(row);
+        }
+        jTable1.setModel(model);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
