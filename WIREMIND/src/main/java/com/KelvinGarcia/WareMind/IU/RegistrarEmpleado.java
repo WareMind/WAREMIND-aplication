@@ -208,10 +208,9 @@ public class RegistrarEmpleado extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Guardado correctamente");
                 this.limpiar();
             } else {
-                JOptionPane.showMessageDialog(this, "Proveedor ya existe", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Ya existe un empleado con ese DNI", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         }
     }

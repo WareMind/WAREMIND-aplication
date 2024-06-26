@@ -152,18 +152,19 @@ public class VerPedidosCliente extends JInternalFrame {
     }// </editor-fold>
 
     private void btnVerProductosPedidoActionPerformed(ActionEvent evt) {
-        if(evt.getSource()==btnVerProductosPedido){
-            if(verProductosPedido!=null){
-                desktop.remove(verProductosPedido);
-                verProductosPedido=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerProductosPedido) {
+            if (verProductosPedido == null) {
+                verProductosPedido = new VerProductosPedido();
+                desktop.add(verProductosPedido);
             }
             else{
                 verProductosPedido= new VerProductosPedido();
                 desktop.add(verProductosPedido);
             }
+
             verProductosPedido.setVisible(true);
+            verProductosPedido.toFront();
+            verProductosPedido.requestFocus();
         }
     }
     private void btnLimpiarActionPerformed(ActionEvent evt) {

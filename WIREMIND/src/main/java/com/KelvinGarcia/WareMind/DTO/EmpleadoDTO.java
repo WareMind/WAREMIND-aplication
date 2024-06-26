@@ -78,7 +78,6 @@ public class EmpleadoDTO {
 
             fueAgregado = (cantidad>0);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         } finally {
             conexion.close();

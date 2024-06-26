@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Sat May 04 19:49:34 PET 2024
- */
-
 package com.KelvinGarcia.WareMind.IU;
 
 import com.KelvinGarcia.WareMind.DTO.ProductoDTO;
@@ -12,10 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * @author user
- */
-public class MostrarProductosVencer extends JInternalFrame {
+public class MostrarProductosVencer extends javax.swing.JInternalFrame {
+    private javax.swing.JButton btnLimpiar;
+    ArrayList<Producto> productos = null;
+
     public MostrarProductosVencer() {
         initComponents();
     }
@@ -24,6 +20,7 @@ public class MostrarProductosVencer extends JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -39,7 +36,17 @@ public class MostrarProductosVencer extends JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Productos por vencer:");
+        jLabel1.setText("Productos vencidos o por vencer:");
+
+        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
+        btnLimpiar.setText("ELIMINAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -82,9 +89,12 @@ public class MostrarProductosVencer extends JInternalFrame {
                                 .addContainerGap(14, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(298, 298, 298)
-                                                .addComponent(btnBuscar)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(btnLimpiar)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(84, 84, 84)
+                                                                .addComponent(btnBuscar)))
                                                 .addGap(53, 53, 53))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,7 +109,9 @@ public class MostrarProductosVencer extends JInternalFrame {
                                         .addComponent(jLabel1))
                                 .addGap(38, 38, 38)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(94, Short.MAX_VALUE))
+                                .addGap(33, 33, 33)
+                                .addComponent(btnLimpiar)
+                                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,9 +121,39 @@ public class MostrarProductosVencer extends JInternalFrame {
         this.listar();
     }
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {
+        int indice = jTable1.getSelectedRow();
+
+        if (indice == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Producto producto = this.productos.get(indice);
+
+        // Validar que el producto tenga fecha de entrada no nula
+        if (producto.getFecha_entrada() == null) {
+            JOptionPane.showMessageDialog(this, "El producto seleccionado no tiene una fecha de entrada válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ProductoDTO productoDTO = new ProductoDTO();
+
+        try {
+            if (productoDTO.eliminarProducto(producto)) {
+                JOptionPane.showMessageDialog(this, "Producto eliminado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar el producto", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
+        }
+        this.listar();
+    }
+
     private void listar(){
         ProductoDTO productoDTO = new ProductoDTO();
-        ArrayList<Producto> productos = null;
 
         try {
             productos = productoDTO.ListarProductosVencidos();
@@ -120,6 +162,12 @@ public class MostrarProductosVencer extends JInternalFrame {
             System.out.println(ex.getMessage());
             return; // Salir del método si ocurre una excepción
         }
+
+        if (productos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay productos agotados o por agotarse", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("NOMBRE");

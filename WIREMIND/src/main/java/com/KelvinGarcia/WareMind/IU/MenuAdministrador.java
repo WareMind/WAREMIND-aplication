@@ -346,114 +346,121 @@ public class MenuAdministrador extends JInternalFrame {
     }
 
     private void btnActualizarProductosActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnActualizarProductos){
-            if(actualizarProductos!=null){
-                desktop.remove(actualizarProductos);
-                actualizarProductos=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnActualizarProductos) {
+            if (actualizarProductos == null) {
+                actualizarProductos = new ActualizarProductos();
+                desktop.add(actualizarProductos);
             }
             else{
                 actualizarProductos= new ActualizarProductos();
                 desktop.add(actualizarProductos);
             }
+
             actualizarProductos.setVisible(true);
+            actualizarProductos.toFront(); // Traer la ventana al frente
+            actualizarProductos.requestFocus(); // Forzar el foco en la ventana
         }
     }
 
     private void btnMostrarProductosVencidosActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnMostrarProductosVencidos){
-            if(mostrarProductosVencer!=null){
-                desktop.remove(mostrarProductosVencer);
-                mostrarProductosVencer=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnMostrarProductosVencidos) {
+            if (mostrarProductosVencer == null) {
+                mostrarProductosVencer = new MostrarProductosVencer();
+                desktop.add(mostrarProductosVencer);
             }
             else{
                 mostrarProductosVencer= new MostrarProductosVencer();
                 desktop.add(mostrarProductosVencer);
             }
+
             mostrarProductosVencer.setVisible(true);
+            mostrarProductosVencer.toFront();
+            mostrarProductosVencer.requestFocus();
         }
     }
 
     private void btnVerPedidosClienteActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerPedidosCliente){
-            if(verPedidosCliente!=null){
-                desktop.remove(verPedidosCliente);
-                verPedidosCliente=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerPedidosCliente) {
+            if (verPedidosCliente == null) {
+                verPedidosCliente = new VerPedidosCliente();
+                desktop.add(verPedidosCliente);
             }
             else{
                 verPedidosCliente= new VerPedidosCliente();
                 desktop.add(verPedidosCliente);
             }
+
             verPedidosCliente.setVisible(true);
+            verPedidosCliente.toFront();
+            verPedidosCliente.requestFocus();
         }
     }
 
     private void btnVerProdcutosProveedorActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerProdcutosProveedor){
-            if(verProductosProveedor!=null){
-                desktop.remove(verProductosProveedor);
-                verProductosProveedor=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerProdcutosProveedor) {
+            if (verProductosProveedor == null) {
+                verProductosProveedor = new VerProductosProveedor();
+                desktop.add(verProductosProveedor);
             }
             else{
                 verProductosProveedor= new VerProductosProveedor();
                 desktop.add(verProductosProveedor);
             }
+
             verProductosProveedor.setVisible(true);
+            verProductosProveedor.toFront();
+            verProductosProveedor.requestFocus();
         }
     }
 
     private void btnVerProductosPedidoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerProductosPedido){
-            if(verProductosPedido!=null){
-                desktop.remove(verProductosPedido);
-                verProductosPedido=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerProductosPedido) {
+            if (verProductosPedido == null) {
+                verProductosPedido = new VerProductosPedido();
+                desktop.add(verProductosPedido);
             }
             else{
                 verProductosPedido= new VerProductosPedido();
                 desktop.add(verProductosPedido);
             }
+
             verProductosPedido.setVisible(true);
+            verProductosPedido.toFront();
+            verProductosPedido.requestFocus();
         }
     }
 
     private void btnHistorialPedidosDiaActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnHistorialPedidosDia){
-            if(historialPedidosDia!=null){
-                desktop.remove(historialPedidosDia);
-                historialPedidosDia=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnHistorialPedidosDia) {
+            if (historialPedidosDia == null) {
+                historialPedidosDia = new HistorialPedidosDia();
+                desktop.add(historialPedidosDia);
             }
             else{
                 historialPedidosDia= new HistorialPedidosDia();
                 desktop.add(historialPedidosDia);
             }
+
             historialPedidosDia.setVisible(true);
+            historialPedidosDia.toFront();
+            historialPedidosDia.requestFocus();
         }
     }
 
     private void btnActualizarInformacionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnActualizarInformacionEmpleado){
-            if(actualizarInfoAdministrador!=null){
-                desktop.remove(actualizarInfoAdministrador);
-                actualizarInfoAdministrador=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnActualizarInformacionEmpleado) {
+            if (actualizarInfoAdministrador == null) {
+                actualizarInfoAdministrador = new ActualizarInfoAdministrador();
+                desktop.add(actualizarInfoAdministrador);
             }
             else{
                 actualizarInfoAdministrador= new ActualizarInfoAdministrador();
                 desktop.add(actualizarInfoAdministrador);
             }
+
             actualizarInfoAdministrador.setVisible(true);
+            actualizarInfoAdministrador.toFront();
+            actualizarInfoAdministrador.requestFocus();
         }
     }
 
@@ -469,18 +476,19 @@ public class MenuAdministrador extends JInternalFrame {
     }
 
     private void btnMostrarProductosAgotadosActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnMostrarProductosAgotados){
-            if(mostrarProductosAgotadosPorAgotar!=null){
-                desktop.remove(mostrarProductosAgotadosPorAgotar);
-                mostrarProductosAgotadosPorAgotar=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnMostrarProductosAgotados) {
+            if (mostrarProductosAgotadosPorAgotar == null) {
+                mostrarProductosAgotadosPorAgotar = new MostrarProductosAgotadosPorAgotarse();
+                desktop.add(mostrarProductosAgotadosPorAgotar);
             }
             else{
                 mostrarProductosAgotadosPorAgotar= new MostrarProductosAgotadosPorAgotarse();
                 desktop.add(mostrarProductosAgotadosPorAgotar);
             }
+
             mostrarProductosAgotadosPorAgotar.setVisible(true);
+            mostrarProductosAgotadosPorAgotar.toFront();
+            mostrarProductosAgotadosPorAgotar.requestFocus();
         }
     }
 

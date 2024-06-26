@@ -245,8 +245,7 @@ public class RegistrarProducto extends JInternalFrame {
         }
     }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt){
-
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Producto producto = new Producto();
             ArrayList<Producto> productoEncontrado;
@@ -259,6 +258,20 @@ public class RegistrarProducto extends JInternalFrame {
             LocalDate fecha_expiracion = LocalDate.parse(textFecha.getText());
             String tipo = textTipo.getText().trim();
             String ubicacion = txtUbicacion.getText().toUpperCase().trim();
+
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser mayor que 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (fecha_expiracion.isBefore(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this, "La fecha de expiración no puede ser menor que la fecha actual", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             productoEncontrado = productoDTO.buscarProducto(nombre);
             boolean idEncontrado;
@@ -279,30 +292,26 @@ public class RegistrarProducto extends JInternalFrame {
             producto.setTipo(tipo);
             producto.setUbicacion(ubicacion);
 
-            if(!productoEncontrado.isEmpty()){
-                if(productoEncontrado.get(0).getFecha_entrada() == LocalDate.now()){
+            if (!productoEncontrado.isEmpty()) {
+                if (productoEncontrado.get(0).getFecha_entrada().equals(LocalDate.now())) {
                     producto.setCantidad((cantidad + productoEncontrado.get(0).getCantidad()));
                     productoDTO.actualizarProducto(producto);
-                }
-                else{
+                } else {
                     producto.setCantidad(cantidad);
-                    if(productoDTO.agregarProducto(producto)){
+                    if (productoDTO.agregarProducto(producto)) {
                         JOptionPane.showMessageDialog(this, "Producto guardado");
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "Producto no se guardo", "Error", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-            }
-            else{
+            } else {
                 producto.setCantidad(cantidad);
-                if(productoDTO.agregarProducto(producto)){
+                if (productoDTO.agregarProducto(producto)) {
                     JOptionPane.showMessageDialog(this, "Producto guardado");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Producto no se guardo", "Error", JOptionPane.WARNING_MESSAGE);
                 }
             }
-
-
 
             ProveedorProductoDTO proovedorProductoDTO = new ProveedorProductoDTO();
             ProveedorProducto proveedorProducto = new ProveedorProducto();
@@ -314,14 +323,12 @@ public class RegistrarProducto extends JInternalFrame {
             proveedorProducto.setTipo(tipo);
             proveedorProducto.setIdProveedor(textDNI.getText());
 
-
-            if (proovedorProductoDTO.agregarProductoDelProveedor(proveedorProducto)){
-                JOptionPane.showMessageDialog(this, "Producto del proveedor registrado");////
+            if (proovedorProductoDTO.agregarProductoDelProveedor(proveedorProducto)) {
+                JOptionPane.showMessageDialog(this, "Producto del proveedor registrado");
                 this.limpiar();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(this, "No se guardo el producto del proveedor", "Error", JOptionPane.WARNING_MESSAGE);
             }
-
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);

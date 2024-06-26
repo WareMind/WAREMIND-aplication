@@ -199,6 +199,12 @@ public class IniciarSesion extends JFrame {
             JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         }
+        this.limpiar();
+    }
+
+    private void limpiar(){
+        textNombre.setText("");
+        textContraseña.setText("");
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off

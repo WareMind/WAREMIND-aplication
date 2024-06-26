@@ -194,26 +194,35 @@ public class ActualizarProductos extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "El producto no existe", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         }
     }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
+        try {
             ProductoDTO productoDTO = new ProductoDTO();
-            producto.get(0).setPrecio(Float.parseFloat(spnPrecio.getValue().toString()));
-            producto.get(0).setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
-            producto.get(0).setUbicacion(txtUbicacion.getText());
+            float precio = Float.parseFloat(spnPrecio.getValue().toString());
+            int cantidad = Integer.parseInt(spnCantidad.getValue().toString());
 
-            if(productoDTO.actualizarProducto(producto.get(0))){
-                JOptionPane.showMessageDialog(this, "Producto actualizado");
-            }else{
-                JOptionPane.showMessageDialog(this, "No se actualizo el producto", "Error", JOptionPane.WARNING_MESSAGE);
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser mayor que 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
+            producto.get(0).setPrecio(precio);
+            producto.get(0).setCantidad(cantidad);
+            producto.get(0).setUbicacion(txtUbicacion.getText());
+
+            if (productoDTO.actualizarProducto(producto.get(0))) {
+                JOptionPane.showMessageDialog(this, "Producto actualizado");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se actualizó el producto", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

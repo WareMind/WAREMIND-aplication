@@ -160,18 +160,19 @@ public class MenuVendedor extends JInternalFrame {
     }
 
     private void btnVerPedidosClienteActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerPedidosCliente){
-            if(verPedidosCliente!=null){
-                desktop.remove(verPedidosCliente);
-                verPedidosCliente=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerPedidosCliente) {
+            if (verPedidosCliente == null) {
+                verPedidosCliente = new VerPedidosCliente();
+                desktop.add(verPedidosCliente);
             }
             else{
                 verPedidosCliente= new VerPedidosCliente();
                 desktop.add(verPedidosCliente);
             }
+
             verPedidosCliente.setVisible(true);
+            verPedidosCliente.toFront();
+            verPedidosCliente.requestFocus();
         }
     }
 
@@ -192,34 +193,36 @@ public class MenuVendedor extends JInternalFrame {
     }
 
     private void btnVerProductosPedidoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerProductosPedido){
-            if(verProductosPedido!=null){
-                desktop.remove(verProductosPedido);
-                verProductosPedido=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerProductosPedido) {
+            if (verProductosPedido == null) {
+                verProductosPedido = new VerProductosPedido();
+                desktop.add(verProductosPedido);
             }
             else{
                 verProductosPedido= new VerProductosPedido();
                 desktop.add(verProductosPedido);
             }
+
             verProductosPedido.setVisible(true);
+            verProductosPedido.toFront();
+            verProductosPedido.requestFocus();
         }
     }
 
     private void btnActualizarInformacionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnActualizarInformacionEmpleado){
-            if(actualizarInfoEmpleado!=null){
-                desktop.remove(actualizarInfoEmpleado);
-                actualizarInfoEmpleado=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnActualizarInformacionEmpleado) {
+            if (actualizarInfoEmpleado == null) {
+                actualizarInfoEmpleado = new ActualizarInfoEmpleado(idEmpleado);
+                desktop.add(actualizarInfoEmpleado);
             }
             else{
                 actualizarInfoEmpleado= new ActualizarInfoEmpleado(idEmpleado);
                 desktop.add(actualizarInfoEmpleado);
             }
+
             actualizarInfoEmpleado.setVisible(true);
+            actualizarInfoEmpleado.toFront();
+            actualizarInfoEmpleado.requestFocus();
         }
     }
 

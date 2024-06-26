@@ -145,50 +145,53 @@ public class MenuAlmacenero extends JInternalFrame {
     }
 
     private void btnActualizarProductosActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnActualizarProductos){
-            if(actualizarProductos!=null){
-                desktop.remove(actualizarProductos);
-                actualizarProductos=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnActualizarProductos) {
+            if (actualizarProductos == null) {
+                actualizarProductos = new ActualizarProductos();
+                desktop.add(actualizarProductos);
             }
             else{
                 actualizarProductos= new ActualizarProductos();
                 desktop.add(actualizarProductos);
             }
+
             actualizarProductos.setVisible(true);
+            actualizarProductos.toFront();
+            actualizarProductos.requestFocus();
         }
     }
 
     private void btnVerProdcutosProveedorActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnVerProdcutosProveedor){
-            if(verProductosProveedor!=null){
-                desktop.remove(verProductosProveedor);
-                verProductosProveedor=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnVerProdcutosProveedor) {
+            if (verProductosProveedor == null) {
+                verProductosProveedor = new VerProductosProveedor();
+                desktop.add(verProductosProveedor);
             }
             else{
                 verProductosProveedor= new VerProductosProveedor();
                 desktop.add(verProductosProveedor);
             }
+
             verProductosProveedor.setVisible(true);
+            verProductosProveedor.toFront();
+            verProductosProveedor.requestFocus();
         }
     }
 
     private void btnActualizarInformacionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
-        if(evt.getSource()==btnActualizarInformacionEmpleado){
-            if(actualizarInfoEmpleado!=null){
-                desktop.remove(actualizarInfoEmpleado);
-                actualizarInfoEmpleado=null;
-                desktop.revalidate();
-                desktop.repaint();
+        if (evt.getSource() == btnActualizarInformacionEmpleado) {
+            if (actualizarInfoEmpleado == null) {
+                actualizarInfoEmpleado = new ActualizarInfoEmpleado(idEmpleado);
+                desktop.add(actualizarInfoEmpleado);
             }
             else{
                 actualizarInfoEmpleado= new ActualizarInfoEmpleado(idEmpleado);
                 desktop.add(actualizarInfoEmpleado);
             }
+
             actualizarInfoEmpleado.setVisible(true);
+            actualizarInfoEmpleado.toFront();
+            actualizarInfoEmpleado.requestFocus();
         }
     }
 

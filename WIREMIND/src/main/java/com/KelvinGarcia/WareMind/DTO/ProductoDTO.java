@@ -51,7 +51,7 @@ public class ProductoDTO {
         Connection conexion = con.getConexion();
 
         try {
-            String sql = "SELECT id_producto, nombre, precio, cantidad, fecha_expiracion, tipo, ubicacion " +
+            String sql = "SELECT * " +
                     "FROM producto " +
                     "WHERE fecha_expiracion <= CURRENT_DATE " +
                     "OR fecha_expiracion BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '7 DAY');";
@@ -69,8 +69,15 @@ public class ProductoDTO {
                 // Convertir java.sql.Date a java.time.LocalDate para fecha_expiracion
                 Date fechaExpiracionSql = rs.getDate("fecha_expiracion");
                 if (fechaExpiracionSql != null) {
-                    LocalDate fechaExpiracion =  fechaExpiracionSql.toLocalDate();
+                    LocalDate fechaExpiracion = fechaExpiracionSql.toLocalDate();
                     p.setFecha_expiracion(fechaExpiracion);
+                }
+
+                // Obtener y convertir java.sql.Date a java.time.LocalDate para fecha_entrada
+                Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                if (fechaEntradaSql != null) {
+                    LocalDate fechaEntrada = fechaEntradaSql.toLocalDate();
+                    p.setFecha_entrada(fechaEntrada);
                 }
 
                 p.setTipo(rs.getString("tipo"));
@@ -103,7 +110,6 @@ public class ProductoDTO {
 
             fueActualizado = (cantidad>0);
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         }finally {
             conexion.close();
@@ -132,7 +138,6 @@ public class ProductoDTO {
 
             agregado = (cantidad > 0);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         } finally {
             conexion.close();
@@ -207,7 +212,7 @@ public class ProductoDTO {
         try {
             String sql = "DELETE FROM producto WHERE id_producto = ? AND fecha_entrada = '"+Date.valueOf(producto.getFecha_entrada())+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, producto.getId()); // Usa setString porque id es de tipo String
+            stmt.setString(1, producto.getId());
 
             fueEliminado = (stmt.executeUpdate() > 0);
         } catch (Exception e) {

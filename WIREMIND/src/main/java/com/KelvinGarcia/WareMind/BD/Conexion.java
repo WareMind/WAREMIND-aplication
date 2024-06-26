@@ -14,9 +14,9 @@ public class Conexion {
         Connection con=null;
         String ip="localhost";
         String usuario="postgres";
-        String contrasenia="963852741.";
+        String contrasenia="admin";
         String basedatos="/WIREMIND";
-        String puerto=":5432";
+        String puerto=":5433";
         String conexionURL = "jdbc:postgresql://"+ip+puerto+basedatos;
 
         try {
