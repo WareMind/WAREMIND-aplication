@@ -164,7 +164,7 @@ public class MostrarProductosVencer extends javax.swing.JInternalFrame {
         }
 
         if (productos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay productos agotados o por agotarse", "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay productos vencidos o por vencer", "Información", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
